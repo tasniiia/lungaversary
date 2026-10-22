@@ -1,0 +1,12 @@
+{
+  "name": "lungaversary",
+  "private": true,
+  "type": "module",
+  "description": "Celebration site for Sheuli's 10th lung-transplant anniversary",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.3.0"
+  }
+}
