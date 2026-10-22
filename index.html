@@ -115,20 +115,32 @@ section[id]{scroll-margin-top:68px}
 .places .dot{color:var(--gold)}
 .places .more{margin-top:6px;font-size:13px;color:var(--muted)}
 
-/* Carousels */
-.carousel{position:relative;margin:22px calc(var(--gutter) * -1) 0}
-.track{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:var(--gutter);padding:8px var(--gutter) 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.track::-webkit-scrollbar{display:none}
-.track figure{flex:0 0 auto;margin:0;scroll-snap-align:start;background:var(--paper);padding:7px;box-shadow:0 1px 2px rgba(27,38,30,.18)}
-.track img{object-fit:cover}
-.carousel-foot{display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter)}
-.carousel-foot .eyebrow{font-size:11px}
-.carousel-btns{display:flex;gap:8px}
-.carousel-btns button{width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold-text);font:inherit;font-size:16px;cursor:pointer}
-.carousel-btns button:hover{background:var(--forest);border-color:var(--forest);color:var(--linen)}
-.carousel-btns button:disabled{opacity:.35;cursor:default;background:transparent;color:var(--gold-text);border-color:var(--gold)}
-@media (hover:none){.carousel-btns{display:none}}
-@media (min-width:560px){.carousel{margin-left:0;margin-right:0}.track{padding-left:0;padding-right:0;scroll-padding-left:0}.carousel-foot{padding:0}}
+/* Photo gallery */
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.tile{display:block;width:100%;margin:0;padding:6px;border:0;background:var(--paper);box-shadow:0 1px 2px rgba(27,38,30,.18);cursor:zoom-in;transition:transform .2s}
+.tile[hidden]{display:none}
+.tile:hover{transform:translateY(-2px)}
+.tile img{width:100%;height:220px;object-fit:cover}
+.tile.wide{grid-column:span 2}
+.tile.wide img{height:210px}
+@media (min-width:520px){.tile img{height:250px}.tile.wide img{height:260px}}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
+.gallery-foot{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:18px}
+.gallery-foot p{font-size:13px;font-style:italic;color:var(--muted)}
+.btn-outline{border:1px solid var(--gold);color:var(--forest);background:transparent;padding:0 26px;font-family:var(--serif);font-size:15px;min-height:48px}
+.btn-outline:hover{background:var(--forest);border-color:var(--forest);color:var(--linen)}
+
+/* Full-screen photo viewer */
+.lightbox{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(14,26,19,.97);color:var(--linen)}
+.lightbox::backdrop{background:rgba(14,26,19,.97)}
+.lightbox[open]{display:flex;flex-direction:column}
+.lb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:64px 12px 8px;min-height:0;touch-action:pan-y}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 0 0 6px var(--paper)}
+.lb-bar{display:flex;align-items:center;justify-content:center;gap:28px;padding:14px 12px calc(18px + env(safe-area-inset-bottom,0px))}
+.lb-bar button,.lb-close{width:48px;height:48px;border-radius:50%;border:1px solid var(--gold-light);background:transparent;color:var(--linen);font:inherit;font-size:18px;cursor:pointer}
+.lb-bar button:hover,.lb-close:hover{background:#24432F}
+.lb-count{min-width:64px;text-align:center;font-style:italic;color:var(--on-dark);font-variant-numeric:tabular-nums}
+.lb-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;font-size:22px}
 
 /* Numbers band */
 .band{background:var(--moss);color:var(--linen);padding:44px 0 48px}
@@ -145,9 +157,6 @@ section[id]{scroll-margin-top:68px}
 .arches figcaption{margin-top:12px}
 .arches .t{display:block;font-style:italic;font-size:19px;line-height:1.3}
 .arches .s{display:block;margin-top:4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-pale)}
-
-.wedding{padding-top:44px;padding-bottom:48px;display:flex;flex-direction:column;gap:12px}
-.wedding .pair{margin-top:24px}
 
 /* Evening */
 .evening{background:var(--forest);color:var(--linen);padding:48px 0 52px}
@@ -170,11 +179,6 @@ section[id]{scroll-margin-top:68px}
 .dish b{font-size:15px}
 .dish .tag{font-size:12px;color:var(--gold-text);margin-left:4px}
 .dish p{font-size:14px;color:var(--muted)}
-.panel.drinks{position:relative;height:380px;background:#EEF2E3;padding:0;overflow:hidden;display:block}
-.drinks svg{position:absolute;left:0;top:30px;width:100%;height:340px}
-.drinks-inner{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;padding:150px 24px 0;color:var(--linen);text-align:center}
-.drinks-inner b{display:block;font-weight:400;font-style:italic;font-size:22px;line-height:1.2}
-.drinks-inner p{font-size:12px;line-height:1.6;margin-top:8px}
 .panel-note{margin:16px 8px 0;text-align:center;font-size:12px;font-style:italic;color:var(--muted)}
 
 /* Give */
@@ -271,7 +275,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <div class="chapter">
         <div class="eyebrow">2013 – 2016 · The long road</div>
         <h3>Waiting to be let in</h3>
-        <p>Year by year, her breathing worsened. With no lung transplant program in Oregon, she went through months of tests to join the list at the University of Washington, then stepped off it when my dad’s work kept moving our family from state to state.</p>
+        <p>Year by year, her condition worsened. With no lung transplant program in Oregon, she went through months of tests to join the list at the University of Washington. But my dad’s work kept him moving from state to state, which left too much uncertainty for us to plan for a transplant at UW, so she stepped off the list.</p>
         <p>A year later, and sicker, she went back. This time she was turned away: too high-risk, they said, and no one would take her. Her pulmonology team refused to accept that answer, and pointed her to UCLA. Given how critical she was, she went straight to the top of the list.</p>
         <p class="pull"><span class="nw">They told her no one would take her.</span><br><span class="big">UCLA did.</span></p>
       </div>
@@ -279,7 +283,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <div class="chapter">
         <div class="eyebrow">December 2016 · 4:00 a.m.</div>
         <h3>The call</h3>
-        <p>About a month later, the phone rang at four in the morning on a cold December night. Our bags were already packed. My mom flew south by air ambulance, I caught the first flight out, and my dad came from Sacramento, where he was working, to meet us there.</p>
+        <p>About a month later, the phone rang at four in the morning. Our bags were already packed. My mom flew south by air ambulance, I caught the first flight out, and my dad drove from Sacramento, where he was working, to Los Angeles to meet us there.</p>
         <figure class="bleed">
           <img src="images/life-flight-640.webp" srcset="images/life-flight-640.webp 640w, images/life-flight-1200.webp 960w" sizes="(min-width:560px) 512px, 100vw" alt="A Cal-Ore Life Flight air ambulance on the tarmac, its pilot walking beside it" style="height:260px" loading="lazy" decoding="async">
           <figcaption>The air ambulance that carried her to Los Angeles.</figcaption>
@@ -347,30 +351,28 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <p class="more">…and more to come.</p>
     </div>
 
-    <div class="carousel" data-carousel>
-      <div class="track" tabindex="0" role="region" aria-label="Travel photos, scroll sideways">
-        <figure><img src="images/spain-640.webp" alt="Sheuli and her husband on a seaside lookout above a cove and white town in Spain" width="256" style="height:202px" loading="lazy" decoding="async"></figure>
-        <figure><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" width="256" style="height:202px" loading="lazy" decoding="async"></figure>
-        <figure><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" width="138" style="height:202px;object-position:center 70%" loading="lazy" decoding="async"></figure>
-        <figure><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" width="256" style="height:202px" loading="lazy" decoding="async"></figure>
-        <figure><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" width="256" style="height:202px" loading="lazy" decoding="async"></figure>
-        <figure><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" width="256" style="height:202px" loading="lazy" decoding="async"></figure>
-      </div>
-      <div class="carousel-foot"><span class="eyebrow">Swipe for more →</span><span class="carousel-btns"><button type="button" data-prev aria-label="Previous photos">←</button><button type="button" data-next aria-label="Next photos">→</button></span></div>
-    </div>
-
     <div class="chapter" style="margin-top:48px">
       <div class="eyebrow">And every day in between</div>
-      <h3>Flowers, family, and dressing up</h3>
-      <div class="carousel" data-carousel style="margin-top:8px">
-        <div class="track" tabindex="0" role="region" aria-label="Everyday photos, scroll sideways">
-          <figure><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" width="151" style="height:220px;object-position:center 45%" loading="lazy" decoding="async"></figure>
-          <figure><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" width="151" style="height:220px;object-position:center 20%" loading="lazy" decoding="async"></figure>
-          <figure><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" width="286" style="height:220px" loading="lazy" decoding="async"></figure>
-          <figure><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" width="151" style="height:220px;object-position:center 25%" loading="lazy" decoding="async"></figure>
-          <figure><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" width="286" style="height:220px" loading="lazy" decoding="async"></figure>
-        </div>
-        <div class="carousel-foot"><span class="eyebrow">Swipe for more →</span><span class="carousel-btns"><button type="button" data-prev aria-label="Previous photos">←</button><button type="button" data-next aria-label="Next photos">→</button></span></div>
+      <h3>Trips, weddings, flowers and family</h3>
+      <div class="gallery" id="gallery">
+        <button type="button" class="tile wide" data-full="images/spain-1200.webp" aria-label="View photo 1 of 14 larger"><img src="images/spain-640.webp" alt="Sheuli and her husband on a seaside lookout above a cove and white town in Spain" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 2 of 14 larger"><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 3 of 14 larger"><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/mexico-1200.webp" aria-label="View photo 4 of 14 larger"><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-hug-1200.webp" aria-label="View photo 5 of 14 larger"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-week-1200.webp" aria-label="View photo 6 of 14 larger"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="object-position:center 15%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/family-women-1200.webp" aria-label="View photo 7 of 14 larger" hidden><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/island-evening-1200.webp" aria-label="View photo 8 of 14 larger" hidden><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" style="object-position:center 70%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/flowers-trio-1200.webp" aria-label="View photo 9 of 14 larger" hidden><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" style="object-position:center 25%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/wedding-celebration-1200.webp" aria-label="View photo 10 of 14 larger" hidden><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="object-position:center 30%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/beach-1200.webp" aria-label="View photo 11 of 14 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/harbor-1200.webp" aria-label="View photo 12 of 14 larger" hidden><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 13 of 14 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/garden-1200.webp" aria-label="View photo 14 of 14 larger" hidden><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" loading="lazy" decoding="async"></button>
+      </div>
+      <div class="gallery-foot">
+        <button type="button" class="btn btn-outline" id="show-all">See all 14 photos</button>
+        <p>Tap any photo to see it larger</p>
       </div>
     </div>
   </section>
@@ -387,24 +389,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
           <figcaption><span class="t">My college graduation</span><span class="s">Oregon State</span></figcaption>
         </figure>
         <figure>
-          <div class="arch"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></div>
+          <div class="arch"><img src="images/wedding-family-640.webp" alt="Sheuli and her husband with their daughter and son-in-law on the wedding day" style="object-position:center 30%" loading="lazy" decoding="async"></div>
           <figcaption><span class="t">My wedding</span><span class="s">Planned together</span></figcaption>
         </figure>
       </div>
-    </div>
-  </section>
-
-  <section class="wedding wrap" aria-label="The wedding">
-    <div class="eyebrow">The wedding</div>
-    <h3>The one we always dreamed of</h3>
-    <p>Planning my wedding together was something we had dreamed about for as long as I can remember. For a long time, I didn’t know if we would get to. She helped me plan it, and then she was right there beside me.</p>
-    <figure class="bleed">
-      <img src="images/wedding-family-640.webp" srcset="images/wedding-family-640.webp 640w, images/wedding-family-1200.webp 1200w" sizes="(min-width:560px) 512px, 100vw" alt="Sheuli and her husband standing with the bride and groom in wedding attire in a garden" style="height:480px;object-position:center 30%" loading="lazy" decoding="async">
-      <figcaption>Our family, grown by one.</figcaption>
-    </figure>
-    <div class="pair">
-      <figure class="print tilt-l2"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="height:210px;object-position:center 15%" loading="lazy" decoding="async"><figcaption class="cap">the week of the wedding</figcaption></figure>
-      <figure class="print tilt-r2 drop"><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="height:210px;object-position:60% 30%" loading="lazy" decoding="async"><figcaption class="cap">one more celebration</figcaption></figure>
     </div>
   </section>
 
@@ -447,16 +435,9 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <div class="panel" role="tabpanel" id="panel-sweets" aria-labelledby="tab-sweets" hidden>
         <div class="dish"><b>Desserts by Luxe Sucre</b><p>Final selections coming soon</p></div>
       </div>
-      <div class="panel drinks" role="tabpanel" id="panel-drinks" aria-labelledby="tab-drinks" data-note="drinks" hidden>
-        <svg viewBox="0 0 200 180" preserveAspectRatio="none" aria-hidden="true">
-          <path fill="#4A5C2F" d="M90 50C70 30 30 32 12 64C0 92 0 140 6 172C40 180 72 176 94 164C98 128 98 90 90 50Z"/>
-          <path fill="#4A5C2F" d="M110 50C130 30 170 32 188 64C200 92 200 140 194 172C160 180 128 176 106 164C102 128 102 90 110 50Z"/>
-          <path fill="#4A5C2F" d="M94 0H106V44L120 60L114 66L100 50L86 66L80 60L94 44Z"/>
-        </svg>
-        <div class="drinks-inner">
-          <div><b>Second Wind</b><p>Ritual Zero Proof habanero tequila, celery, agave, lime, ginger beer</p></div>
-          <div><b>Full Bloom</b><p>Ritual Zero Proof gin, hibiscus, rhubarb, lemon, soda</p></div>
-        </div>
+      <div class="panel" role="tabpanel" id="panel-drinks" aria-labelledby="tab-drinks" data-note="drinks" hidden>
+        <div class="dish"><b>Second Wind</b><p>Ritual Zero Proof habanero tequila, celery, agave syrup, lime, ginger beer</p></div>
+        <div class="dish"><b>Full Bloom</b><p>Ritual Zero Proof gin, hibiscus, rhubarb, lemon, soda</p></div>
       </div>
       <p class="panel-note" id="panel-note" aria-live="polite">*Unfortunately, chicken is not halal. Please opt for a pescatarian or vegetarian appetizer or entrée.</p>
     </div>
@@ -512,6 +493,16 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <a class="totop" href="#top">Back to the top ↑</a>
   </div>
 </footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <button type="button" class="lb-close" data-lb-close aria-label="Close photo viewer">×</button>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-bar">
+    <button type="button" data-lb-prev aria-label="Previous photo">←</button>
+    <span class="lb-count" id="lb-count" aria-live="polite"></span>
+    <button type="button" data-lb-next aria-label="Next photo">→</button>
+  </div>
+</dialog>
 
 <script>
 (function () {
@@ -574,22 +565,52 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     });
   });
 
-  // Carousel arrow buttons (shown on devices with a mouse)
-  Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), function (c) {
-    var track = c.querySelector('.track');
-    var prev = c.querySelector('[data-prev]');
-    var next = c.querySelector('[data-next]');
-    function step() { var f = track.querySelector('figure'); return f ? f.getBoundingClientRect().width + 14 : 260; }
-    function update() {
-      prev.disabled = track.scrollLeft < 4;
-      next.disabled = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
-    }
-    prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+  // Photo gallery: reveal the rest, and open any photo full screen
+  var tilesEls = Array.prototype.slice.call(document.querySelectorAll('#gallery .tile'));
+  var showAll = document.getElementById('show-all');
+  showAll.addEventListener('click', function () {
+    var firstHidden = null;
+    tilesEls.forEach(function (t) { if (t.hidden && !firstHidden) firstHidden = t; t.hidden = false; });
+    showAll.parentNode.removeChild(showAll);
+    if (firstHidden) firstHidden.focus({ preventScroll: true });
   });
+
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCount = document.getElementById('lb-count');
+  var idx = 0, opener = null;
+  function show(i) {
+    idx = (i + tilesEls.length) % tilesEls.length;
+    var t = tilesEls[idx], img = t.querySelector('img');
+    lbImg.src = t.getAttribute('data-full');
+    lbImg.alt = img.alt;
+    lbCount.textContent = (idx + 1) + ' / ' + tilesEls.length;
+    (new Image()).src = tilesEls[(idx + 1) % tilesEls.length].getAttribute('data-full');
+  }
+  tilesEls.forEach(function (t, i) {
+    t.addEventListener('click', function () {
+      opener = t; show(i);
+      if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
+      document.documentElement.style.overflow = 'hidden';
+    });
+  });
+  function closeLb() { if (lb.close) lb.close(); else { lb.removeAttribute('open'); lb.dispatchEvent(new Event('close')); } }
+  lb.addEventListener('close', function () { document.documentElement.style.overflow = ''; if (opener) opener.focus({ preventScroll: true }); });
+  lb.querySelector('[data-lb-close]').addEventListener('click', closeLb);
+  lb.querySelector('[data-lb-prev]').addEventListener('click', function () { show(idx - 1); });
+  lb.querySelector('[data-lb-next]').addEventListener('click', function () { show(idx + 1); });
+  lb.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') show(idx + 1);
+    if (e.key === 'ArrowLeft') show(idx - 1);
+  });
+  var stage = document.getElementById('lb-stage'), x0 = null;
+  stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
+  });
+  stage.addEventListener('click', function (e) { if (e.target === stage) closeLb(); });
 
   // Notes for her keepsake book
   var form = document.getElementById('note-form');
