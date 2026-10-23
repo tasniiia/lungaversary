@@ -151,10 +151,12 @@ section[id]{scroll-margin-top:68px}
 .figure-row b{font-weight:400;font-size:38px;line-height:1}
 .figure-row span{font-style:italic;font-size:16px;line-height:1.4}
 .band-lead{margin:40px 0 22px;text-align:center;font-style:italic;font-size:22px;line-height:1.4}
-.arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;text-align:center}
+.arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:center;margin:0 calc(var(--gutter) / -2)}
+@media (min-width:560px){.arches{margin:0;gap:20px}}
 .arches figure{margin:0}
-.arch{border:1px solid var(--gold-light);border-radius:90px 90px 0 0;padding:5px}
-.arch img{width:100%;height:220px;object-fit:cover;border-radius:85px 85px 0 0}
+.arch{border:1px solid var(--gold-light);border-radius:999px 999px 0 0;padding:5px}
+.arch img{width:100%;height:300px;object-fit:cover;border-radius:999px 999px 0 0}
+@media (min-width:520px){.arch img{height:340px}}
 .arches figcaption{margin-top:12px}
 .arches .t{display:block;font-style:italic;font-size:clamp(14px,4vw,18px);line-height:1.3;white-space:nowrap}
 .arches .s{display:block;margin-top:4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-pale)}
@@ -229,10 +231,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
   <div class="jump-inner">
     <a class="top" href="#top">Top</a>
     <a href="#story">Her story</a>
-    <a href="#evening">The evening</a>
+    <a href="#evening">Tonight’s agenda</a>
     <a href="#table">At the table</a>
     <a href="#give">Pass it on</a>
-    <a href="#note">A note for Sheuli</a>
+    <a href="#note">Write Sheuli a note</a>
   </div>
 </nav>
 
@@ -243,7 +245,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <h1>Sheuli</h1>
     <p class="hero-line">Ten years with her new lungs, <span>and counting.</span></p>
     <dl class="details">
-      <div><dt>When</dt><dd>Saturday<br>December 19, 2026<br>4:00 – 7:00 pm</dd></div>
+      <div><dt>When</dt><dd>Saturday<br>December 19, 2026</dd></div>
       <div><dt>Where</dt><dd>The Arc Light Venue<br>Oregon City</dd></div>
     </dl>
   </div>
@@ -255,10 +257,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <p class="program-hint">Tap a section to jump there</p>
     <ol class="prog">
       <li><a href="#story"><span class="num">1</span><span><span class="t">Her story</span><span class="s">a decade in the making</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
-      <li><a href="#evening"><span class="num">2</span><span><span class="t">The evening</span><span class="s">run of show</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
+      <li><a href="#evening"><span class="num">2</span><span><span class="t">Tonight’s agenda</span><span class="s">4:00 – 7:00 pm</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
       <li><a href="#table"><span class="num">3</span><span><span class="t">At the table</span><span class="s">menu &amp; mocktails</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
       <li><a href="#give"><span class="num">4</span><span><span class="t">Pass it on</span><span class="s">become an organ donor</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
-      <li><a href="#note"><span class="num">5</span><span><span class="t">A note for Sheuli</span><span class="s">for her keepsake</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
+      <li><a href="#note"><span class="num">5</span><span><span class="t">Write Sheuli a note</span><span class="s">for her keepsake</span></span><span class="arrow" aria-hidden="true">↓</span></a></li>
     </ol>
   </nav>
 
@@ -271,6 +273,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <h3>Short of breath</h3>
         <p>In 2012, my mom started running out of breath far too easily. We didn’t think much of it. Then, at an appointment for something else entirely, her doctor watched her oxygen drop as she simply walked across the room.</p>
         <p>Months of tests and biopsies followed, and with them three diagnoses: Sjögren’s syndrome, pulmonary hypertension and pulmonary fibrosis. Medication could ease the symptoms. Only new lungs could change the ending.</p>
+        <p>Soon after her diagnosis, my mom joined a number of support groups to meet people going through the same thing she was. Through that community she met many incredible human beings, a few of whom are here tonight.</p>
       </div>
 
       <div class="chapter">
@@ -336,7 +339,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
   <section class="after wrap" aria-label="After the transplant">
     <div class="eyebrow">2017 – 2026 · After</div>
     <h3>Getting her life back</h3>
-    <p>As she grew stronger, my mom and I explored Los Angeles together. Then we went home, to ten years of trips, milestones, and every ordinary day in between.</p>
+    <p>As she grew stronger, my mom and I explored Los Angeles together: wandering markets, sitting in the sun, and finding new favorite spots. She had been given a new lease on life, and she was determined to make the most of every bit of it.</p>
+    <p>When we finally went home, she said yes to everything. Trips she had put off for years, milestones she was never sure she would see, and all the ordinary, wonderful days in between.</p>
     <figure class="bleed" style="margin-top:16px">
       <img src="images/grove-640.webp" srcset="images/grove-640.webp 640w, images/grove-1200.webp 1200w" sizes="(min-width:560px) 512px, 100vw" alt="Sheuli and her daughter smiling cheek to cheek beside a fountain at The Grove in Los Angeles" style="height:280px" loading="lazy" decoding="async">
       <figcaption>The Grove, Los Angeles, a few weeks after surgery.</figcaption>
@@ -357,25 +361,25 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <h3 class="one-line">Trips, weddings, friends and family</h3>
       <div class="gallery" id="gallery">
         <button type="button" class="tile wide" data-full="images/spain-1200.webp" aria-label="View photo 1 of 20 larger"><img src="images/spain-640.webp" alt="Sheuli and her husband on a seaside lookout above a cove and white town in Spain" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 2 of 20 larger"><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 3 of 20 larger"><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-hug-1200.webp" aria-label="View photo 2 of 20 larger"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-week-1200.webp" aria-label="View photo 3 of 20 larger"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="object-position:center 15%" loading="lazy" decoding="async"></button>
         <button type="button" class="tile wide" data-full="images/family-gathering-1200.webp" aria-label="View photo 4 of 20 larger"><img src="images/family-gathering-640.webp" alt="Sheuli with her extended family, three generations, gathered on and around a sofa at home" style="object-position:center 88%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/wedding-hug-1200.webp" aria-label="View photo 5 of 20 larger"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/wedding-week-1200.webp" aria-label="View photo 6 of 20 larger"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="object-position:center 15%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/haldi-family-1200.webp" aria-label="View photo 7 of 20 larger" hidden><img src="images/haldi-family-640.webp" alt="Sheuli in a green sari with family around the bride and groom under a floral arch at the haldi" style="object-position:center 65%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/dancing-1200.webp" aria-label="View photo 8 of 20 larger" hidden><img src="images/dancing-640.webp" alt="Sheuli in a green and gold sari and sunglasses dancing with friends at the wedding celebration" style="object-position:center 25%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/red-car-1200.webp" aria-label="View photo 9 of 20 larger" hidden><img src="images/red-car-640.webp" alt="Sheuli in a silver sari and sunglasses beside a friend in gold, posing with a red sports car" style="object-position:90% center" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/friends-gathering-1200.webp" aria-label="View photo 10 of 20 larger" hidden><img src="images/friends-gathering-640.webp" alt="Sheuli with a group of friends dressed in embroidered outfits, gathered around a red sofa at home" style="object-position:center 45%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/mexico-1200.webp" aria-label="View photo 11 of 20 larger" hidden><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/island-evening-1200.webp" aria-label="View photo 12 of 20 larger" hidden><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" style="object-position:center 70%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/flowers-trio-1200.webp" aria-label="View photo 13 of 20 larger" hidden><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" style="object-position:center 25%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/family-women-1200.webp" aria-label="View photo 14 of 20 larger" hidden><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/beach-1200.webp" aria-label="View photo 15 of 20 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/harbor-1200.webp" aria-label="View photo 16 of 20 larger" hidden><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/wedding-celebration-1200.webp" aria-label="View photo 17 of 20 larger" hidden><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="object-position:center 30%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/mexico-city-1200.webp" aria-label="View photo 18 of 20 larger" hidden><img src="images/mexico-city-640.webp" alt="Sheuli in a straw hat and sunglasses with a friend on a terrace in Mexico City" style="object-position:center 70%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 19 of 20 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/garden-1200.webp" aria-label="View photo 20 of 20 larger" hidden><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/haldi-family-1200.webp" aria-label="View photo 5 of 20 larger"><img src="images/haldi-family-640.webp" alt="Sheuli in a green sari with family around the bride and groom under a floral arch at the haldi" style="object-position:center 65%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/dancing-1200.webp" aria-label="View photo 6 of 20 larger"><img src="images/dancing-640.webp" alt="Sheuli in a green and gold sari and sunglasses dancing with friends at the wedding celebration" style="object-position:center 25%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/red-car-1200.webp" aria-label="View photo 7 of 20 larger"><img src="images/red-car-640.webp" alt="Sheuli in a silver sari and sunglasses beside a friend in gold, posing with a red sports car" style="object-position:90% center" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/friends-gathering-1200.webp" aria-label="View photo 8 of 20 larger" hidden><img src="images/friends-gathering-640.webp" alt="Sheuli with a group of friends dressed in embroidered outfits, gathered around a red sofa at home" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/mexico-1200.webp" aria-label="View photo 9 of 20 larger" hidden><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/island-evening-1200.webp" aria-label="View photo 10 of 20 larger" hidden><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" style="object-position:center 70%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/flowers-trio-1200.webp" aria-label="View photo 11 of 20 larger" hidden><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" style="object-position:center 25%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/family-women-1200.webp" aria-label="View photo 12 of 20 larger" hidden><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/beach-1200.webp" aria-label="View photo 13 of 20 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/harbor-1200.webp" aria-label="View photo 14 of 20 larger" hidden><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/wedding-celebration-1200.webp" aria-label="View photo 15 of 20 larger" hidden><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="object-position:center 30%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/mexico-city-1200.webp" aria-label="View photo 16 of 20 larger" hidden><img src="images/mexico-city-640.webp" alt="Sheuli in a straw hat and sunglasses with a friend on a terrace in Mexico City" style="object-position:center 70%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 17 of 20 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/garden-1200.webp" aria-label="View photo 18 of 20 larger" hidden><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 19 of 20 larger" hidden><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 20 of 20 larger" hidden><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
       </div>
       <div class="gallery-foot">
         <button type="button" class="btn btn-outline" id="show-all">See all 20 photos</button>
@@ -404,7 +408,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
   <section class="evening dark" id="evening" aria-labelledby="evening-title">
     <div class="wrap">
-      <h2 id="evening-title">The evening</h2>
+      <h2 id="evening-title">Tonight’s agenda</h2>
       <ol class="ros">
         <li><time>4:00</time><span><span class="t">Mocktail hour</span><span class="s">Mingle over Second Wind &amp; Full Bloom</span></span></li>
         <li><time>4:45</time><span><span class="t">Toasts &amp; speeches</span><span class="s">Words for Sheuli, and for the donor family who said yes</span></span></li>
@@ -470,7 +474,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
   <section class="note" id="note" aria-labelledby="note-title">
     <div class="wrap">
-      <h2 id="note-title">A note for Sheuli</h2>
+      <h2 id="note-title">Write Sheuli a note</h2>
       <p class="intro">Every note left tonight will be bound into a keepsake book and given to her after the celebration.</p>
       <form id="note-form" novalidate>
         <label>Your note
