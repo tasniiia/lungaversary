@@ -77,16 +77,6 @@ section[id]{scroll-margin-top:68px}
 .jump a{flex:0 0 auto;min-height:44px;display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--on-dark);text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent}
 .jump a.active{color:var(--linen);font-style:italic;border-bottom-color:var(--gold-light)}
 .jump .top{color:var(--gold-light);font-style:italic}
-.jump .yr{flex:0 0 auto;align-self:center;overflow:hidden;max-width:0;opacity:0;padding:0;margin-right:0;border:1px solid var(--gold-light);border-width:0;border-radius:999px;color:var(--gold-light);font-style:italic;font-size:14px;line-height:30px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:max-width .3s ease,opacity .3s ease,padding .3s ease,margin .3s ease}
-.jump .yr.on{max-width:80px;opacity:1;padding:0 12px;margin-right:6px;border-width:1px}
-
-/* Journey line: fills from 2012 to 2026 while reading her story */
-.journey{position:fixed;z-index:15;top:calc(66px + env(safe-area-inset-top,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));left:max(calc(9px + env(safe-area-inset-left,0px)),calc(50% - 271px));width:2px;background:rgba(176,141,62,.22);border-radius:2px;opacity:0;transition:opacity .3s ease;pointer-events:none}
-.journey.on{opacity:1}
-.journey-fill{position:absolute;inset:0;background:var(--gold);border-radius:2px;transform-origin:top;transform:scaleY(0)}
-.journey-dot{position:absolute;left:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(176,141,62,.25);top:0}
-@media (prefers-reduced-motion:reduce){.jump .yr,.journey{transition:none}}
-
 /* Donor counter */
 .tally{margin-top:22px;padding-top:20px;border-top:1px dashed var(--forest-line);display:flex;flex-direction:column;gap:14px}
 .tally-row{display:flex;align-items:baseline;gap:14px}
@@ -144,6 +134,13 @@ section[id]{scroll-margin-top:68px}
 .tile:hover{transform:translateY(-2px)}
 .tile img{width:100%;height:220px;object-fit:cover}
 .tile.wide{grid-column:span 2}
+.tile[data-egg]{position:relative;cursor:pointer}
+.tile[data-egg] img{transform-origin:50% 62%}
+.tile.breathe img{animation:breathe 1.7s ease-in-out}
+@keyframes breathe{0%{transform:scale(1)}42%{transform:scale(1.07,1.1)}58%{transform:scale(1.07,1.1)}100%{transform:scale(1)}}
+.heart{position:absolute;left:50%;top:40%;pointer-events:none;opacity:0;animation:rise 1.8s ease-out forwards;z-index:2}
+@keyframes rise{0%{opacity:0;transform:translate(-50%,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),-170px) scale(1.15) rotate(var(--rot))}}
+@media (prefers-reduced-motion:reduce){.tile.breathe img{animation:none}.heart{display:none}}
 .tile.wide img{height:210px}
 @media (min-width:520px){.tile img{height:250px}.tile.wide img{height:260px}}
 @media (prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
@@ -169,7 +166,10 @@ section[id]{scroll-margin-top:68px}
 .band .eyebrow{color:var(--gold-pale);letter-spacing:.32em;margin-bottom:14px}
 .figure-row{display:grid;grid-template-columns:128px minmax(0,1fr);column-gap:16px;align-items:baseline;padding:16px 0;border-top:1px solid var(--moss-line)}
 .figure-row:last-of-type{border-bottom:1px solid var(--moss-line)}
-.figure-row b{font-weight:400;font-size:38px;line-height:1}
+.figure-row b{position:relative;font-weight:400;font-size:38px;line-height:1;font-variant-numeric:tabular-nums}
+.figure-row b.glint::after{content:"";position:absolute;right:-10px;top:-4px;width:10px;height:10px;background:radial-gradient(circle,var(--gold-pale) 0 30%,transparent 70%);transform:scale(0);animation:glint .9s ease-out forwards}
+@keyframes glint{40%{transform:scale(1.6) rotate(45deg);opacity:1}100%{transform:scale(0) rotate(90deg);opacity:0}}
+.fx-layer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 .figure-row span{font-style:italic;font-size:16px;line-height:1.4}
 .band-lead{margin:40px 0 22px;text-align:center;font-style:italic;font-size:22px;line-height:1.4}
 .arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:center;margin:0 calc(var(--gutter) / -2)}
@@ -250,7 +250,6 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
 <nav class="jump" id="jump" aria-label="Jump to a section" inert>
   <div class="jump-inner">
-    <span class="yr" id="yr" aria-hidden="true">2012</span>
     <a class="top" href="#top">Top</a>
     <a href="#story">Her story</a>
     <a href="#evening">Tonight’s agenda</a>
@@ -259,8 +258,6 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <a href="#note">Write Sheuli a note</a>
   </div>
 </nav>
-
-<div class="journey" id="journey" aria-hidden="true"><div class="journey-fill" id="journey-fill"></div><div class="journey-dot" id="journey-dot"></div></div>
 
 <header class="hero" id="top">
   <div class="hero-ten" aria-hidden="true">10</div>
@@ -292,7 +289,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <div class="wrap">
       <h2 id="story-title">Her story</h2>
 
-      <div class="chapter" data-year="2012">
+      <div class="chapter">
         <div class="eyebrow">2012 · The beginning</div>
         <h3>Short of breath</h3>
         <p>In 2012, my mom went in for a routine doctor’s appointment. Her doctor noticed that just walking across the room made her oxygen levels drop far lower than they ever should have.</p>
@@ -300,7 +297,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <p>Along the way, she found her people. She joined a number of support groups for others facing the same diagnosis and met many incredible human beings, a few of whom are here tonight.</p>
       </div>
 
-      <div class="chapter" data-year="2013">
+      <div class="chapter">
         <div class="eyebrow">2013 – 2016 · The long road</div>
         <h3>Waiting to be let in</h3>
         <p>Year by year, her condition worsened. Oregon had no lung transplant program, so she went through months of testing to join the list at the University of Washington. But my dad’s work kept him moving from state to state, and with that much uncertainty, we couldn’t plan for a transplant at UW. She stepped off the list.</p>
@@ -308,7 +305,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <p class="pull"><span class="nw">They told her no one would take her.</span><br><span class="big">UCLA did.</span></p>
       </div>
 
-      <div class="chapter" data-year="2016">
+      <div class="chapter">
         <div class="eyebrow">December 2016 · 4:00 a.m.</div>
         <h3>The call</h3>
         <p>About a month later, the phone rang at four in the morning. Our bags were already packed. My mom flew to Los Angeles by air ambulance, I caught the first flight out, and my dad drove down from Sacramento, where he was working, to meet us there.</p>
@@ -328,7 +325,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div><b>24</b><span>hours to her<br>first steps</span></div>
       </div>
 
-      <div class="chapter" data-year="2016">
+      <div class="chapter">
         <div class="eyebrow">UCLA · Overnight</div>
         <h3>The longest night</h3>
         <p>The surgery ran through the night, and none of us slept. Our phones never stopped buzzing with calls and texts from everyone who loves her, sending strength, prayers and positivity, asking for updates and offering whatever help they could.</p>
@@ -344,7 +341,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         </figure>
       </div>
 
-      <div class="chapter" data-year="2016" style="margin-top:44px">
+      <div class="chapter" style="margin-top:44px">
         <div class="eyebrow">Winter 2016 – Spring 2017</div>
         <h3>Learning to breathe again</h3>
         <p>After three weeks in the ICU, she moved into Tiverton House, UCLA’s hotel for patients and their families. We were supposed to stay three months. She recovered so well that we went home after two.</p>
@@ -366,7 +363,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     </div>
   </section>
 
-  <section class="after wrap" aria-label="After the transplant" data-year-from="2017" data-year-to="2026">
+  <section class="after wrap" aria-label="After the transplant">
     <div class="eyebrow">2017 – 2026 · After</div>
     <h3>Getting her life back</h3>
     <p>As she got stronger, my mom and I explored Los Angeles together, wandering markets and landmarks and Ubering anywhere we could, from the Griffith Observatory to the Dolby Theatre to Chinatown and everywhere in between. She had been handed a second chance, and she wasn’t going to waste a minute of it.</p>
@@ -409,7 +406,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 17 of 20 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
         <button type="button" class="tile wide" data-full="images/beach-1200.webp" aria-label="View photo 18 of 20 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
         <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 19 of 20 larger" hidden><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 20 of 20 larger" hidden><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-egg data-full="images/plush-lungs-1200.webp" aria-label="Sheuli with a pair of plush lungs. Tap for a surprise." hidden><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
       </div>
       <div class="gallery-foot">
         <button type="button" class="btn btn-outline" id="show-all">See all 20 photos</button>
@@ -417,11 +414,11 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     </div>
   </section>
 
-  <section class="band" aria-label="Ten years, by the numbers" data-year="2026" data-journey-end>
+  <section class="band" aria-label="Ten years, by the numbers">
     <div class="wrap">
       <div class="eyebrow">Ten years, by the numbers</div>
-      <div class="figure-row"><b>3,650</b><span>days she was never promised</span></div>
-      <div class="figure-row"><b>15+</b><span>states and countries explored</span></div>
+      <div class="figure-row"><b data-count="3650">3,650</b><span>days she was never promised</span></div>
+      <div class="figure-row"><b data-count="15" data-suffix="+">15+</b><span>states and countries explored</span></div>
       <p class="band-lead">And the days I was never<br>sure she would see</p>
       <div class="arches">
         <figure>
@@ -504,7 +501,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div class="eyebrow">Give in her honor</div>
         <h3>Support Donate Life America</h3>
         <p>Donate Life America works to save lives through organ, eye and tissue donation. A gift in Sheuli’s honor helps another family get a 4 a.m. call like ours.</p>
-        <a class="btn btn-line" href="https://donatelife.net/how-you-can-help/contribute/" target="_blank" rel="noopener">Give to Donate Life America <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-line" id="donate-link" href="https://donatelife.net/how-you-can-help/contribute/" target="_blank" rel="noopener">Give to Donate Life America <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
@@ -634,8 +631,27 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     lbCount.textContent = (idx + 1) + ' / ' + tilesEls.length;
     (new Image()).src = tilesEls[(idx + 1) % tilesEls.length].getAttribute('data-full');
   }
+  var heartColors = ['#E8807F', '#F2A7A3', '#D4B46A', '#E8807F', '#F6C5C0'];
+  function breathe(t) {
+    t.classList.remove('breathe'); void t.offsetWidth; t.classList.add('breathe');
+    for (var k = 0; k < 6; k++) {
+      (function (k) {
+        setTimeout(function () {
+          var h = document.createElement('span');
+          h.className = 'heart'; h.setAttribute('aria-hidden', 'true');
+          h.innerHTML = '<svg width="18" height="16" viewBox="0 0 24 21"><path fill="' + heartColors[k % heartColors.length] + '" d="M12 21s-9-5.6-9-12A5 5 0 0 1 12 6a5 5 0 0 1 9 3c0 6.4-9 12-9 12z"/></svg>';
+          h.style.setProperty('--dx', Math.round(Math.random() * 140 - 70) + 'px');
+          h.style.setProperty('--rot', Math.round(Math.random() * 40 - 20) + 'deg');
+          h.style.marginLeft = Math.round(Math.random() * 60 - 30) + 'px';
+          t.appendChild(h);
+          setTimeout(function () { h.remove(); }, 1900);
+        }, 450 + k * 120);
+      })(k);
+    }
+  }
   tilesEls.forEach(function (t, i) {
     t.addEventListener('click', function () {
+      if (t.hasAttribute('data-egg')) { breathe(t); return; }
       opener = t; show(i);
       if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
       document.documentElement.style.overflow = 'hidden';
@@ -658,6 +674,106 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
   });
   stage.addEventListener('click', function (e) { if (e.target === stage) closeLb(); });
+
+  // Little celebrations: petals for new donors, gold flecks for gifts
+  var fx = (function () {
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cv = null, ctx = null, parts = [], running = false, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function layer() {
+      if (cv) return;
+      cv = document.createElement('canvas'); cv.className = 'fx-layer'; cv.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(cv); ctx = cv.getContext('2d'); size();
+      window.addEventListener('resize', size);
+    }
+    function size() { if (!cv) return; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function origin(el) { var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width }; }
+    function drawPetal(p) {
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(176,141,62,.55)'; ctx.beginPath(); ctx.arc(-p.size * 0.55, 0, p.size * 0.16, 0, Math.PI * 2); ctx.fill();
+    }
+    function drawLeaf(p) {
+      var s = p.size; ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.moveTo(-s, 0); ctx.quadraticCurveTo(0, -s * 0.75, s, 0); ctx.quadraticCurveTo(0, s * 0.75, -s, 0); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(-s * 0.8, 0); ctx.lineTo(s * 0.8, 0); ctx.stroke();
+    }
+    function drawFleck(p) {
+      var s = p.size * (0.6 + 0.4 * Math.sin(p.age * 0.35 + p.phase));
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.moveTo(0, -s); ctx.lineTo(s * 0.35, 0); ctx.lineTo(0, s); ctx.lineTo(-s * 0.35, 0); ctx.closePath(); ctx.fill();
+    }
+    function tick() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      parts = parts.filter(function (p) { return p.age < p.life; });
+      parts.forEach(function (p) {
+        p.age++; p.vy += p.g; p.vx *= p.drag; p.vy *= p.drag;
+        p.x += p.vx + Math.sin(p.age * p.wobble + p.phase) * p.sway; p.y += p.vy; p.rot += p.spin;
+        var fade = p.age > p.life - 30 ? (p.life - p.age) / 30 : 1;
+        ctx.save(); ctx.globalAlpha = Math.max(0, fade); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+        p.draw(p); ctx.restore();
+      });
+      if (parts.length) requestAnimationFrame(tick); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+    }
+    function go() { if (!running) { running = true; requestAnimationFrame(tick); } }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    return {
+      petals: function (el) {
+        if (still) return; layer(); var o = origin(el);
+        var greens = ['#4A5C2F', '#6F8A62', '#9DB08F', '#2C6247'];
+        for (var i = 0; i < 46; i++) {
+          var leaf = i % 3 === 0, a = rnd(-Math.PI * 0.95, -Math.PI * 0.05), sp = rnd(5, 11);
+          parts.push({ x: o.x + rnd(-o.w / 3, o.w / 3), y: o.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, g: 0.16, drag: 0.975,
+            rot: rnd(0, 6.3), spin: rnd(-0.08, 0.08), sway: rnd(0.4, 1.2), wobble: rnd(0.05, 0.12), phase: rnd(0, 6.3),
+            size: leaf ? rnd(7, 11) : rnd(6, 9), color: leaf ? greens[i % 4] : (i % 5 === 0 ? '#F6F2E9' : '#FFFFFF'),
+            draw: leaf ? drawLeaf : drawPetal, age: 0, life: Math.round(rnd(110, 170)) });
+        }
+        go();
+      },
+      flecks: function (el) {
+        if (still) return; layer(); var o = origin(el);
+        var golds = ['#D4B46A', '#E2D3A4', '#B08D3E', '#F1E3B5'];
+        for (var i = 0; i < 44; i++) {
+          var a = rnd(0, Math.PI * 2), sp = rnd(2.5, 7.5);
+          parts.push({ x: o.x + rnd(-o.w / 2.5, o.w / 2.5), y: o.y + rnd(-10, 10), vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.5, g: 0.05, drag: 0.94,
+            rot: rnd(0, 6.3), spin: rnd(-0.04, 0.04), sway: 0, wobble: 0, phase: rnd(0, 6.3),
+            size: rnd(4, 8), color: golds[i % 4], draw: drawFleck, age: 0, life: Math.round(rnd(45, 70)) });
+        }
+        go();
+      },
+      still: still
+    };
+  })();
+
+  // Gold flecks, then open Donate Life
+  var donate = document.getElementById('donate-link');
+  donate.addEventListener('click', function (e) {
+    if (fx.still || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault(); fx.flecks(donate);
+    var url = donate.href;
+    setTimeout(function () { var w = window.open(url, '_blank', 'noopener'); if (!w) location.href = url; }, 550);
+  });
+
+  // Numbers count up the first time they come into view
+  var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+  if ('IntersectionObserver' in window && !fx.still) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        var el = e.target, end = +el.getAttribute('data-count'), suf = el.getAttribute('data-suffix') || '';
+        var t0 = null, dur = end > 100 ? 1600 : 1000;
+        el.textContent = '0' + suf;
+        function step(t) {
+          if (!t0) t0 = t;
+          var k = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - k, 3);
+          el.textContent = Math.round(end * eased).toLocaleString() + suf;
+          if (k < 1) requestAnimationFrame(step); else el.classList.add('glint');
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.8 });
+    counters.forEach(function (c) { if (c.getBoundingClientRect().top > innerHeight) c.textContent = '0' + (c.getAttribute('data-suffix') || ''); cio.observe(c); });
+  }
 
   // Live donor counter
   var tallyN = document.getElementById('tally-n');
@@ -690,46 +806,11 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       .then(function (d) {
         mine = true;
         try { localStorage.setItem('lungaversary-registered', '1'); } catch (e) {}
-        markMine(); paint(d.count);
+        markMine(); paint(d.count); fx.petals(regBtn);
       })
       .catch(function () { tallyT.textContent = 'We couldn’t record that just now. Please try again in a moment.'; })
       .finally(function () { regBtn.disabled = false; });
   });
-
-  // Journey line through her story, 2012 to 2026
-  var journey = document.getElementById('journey');
-  var jFill = document.getElementById('journey-fill');
-  var jDot = document.getElementById('journey-dot');
-  var yr = document.getElementById('yr');
-  var storyStart = document.getElementById('story');
-  var storyEnd = document.querySelector('[data-journey-end]');
-  var marks = Array.prototype.slice.call(document.querySelectorAll('[data-year]'));
-  var span = document.querySelector('[data-year-from]');
-  var ticking = false;
-  function updateJourney() {
-    ticking = false;
-    var vh = window.innerHeight, mid = vh * 0.5;
-    var top = storyStart.getBoundingClientRect().top;
-    var bottom = storyEnd.getBoundingClientRect().bottom;
-    var inStory = top < mid && bottom > mid;
-    journey.classList.toggle('on', inStory);
-    yr.classList.toggle('on', inStory);
-    if (!inStory) return;
-    var p = Math.min(1, Math.max(0, (mid - top) / (bottom - top)));
-    jFill.style.transform = 'scaleY(' + p + ')';
-    jDot.style.top = (p * 100) + '%';
-    var year = '2012';
-    marks.forEach(function (m) { if (m.getBoundingClientRect().top < mid) year = m.getAttribute('data-year'); });
-    var r = span.getBoundingClientRect();
-    if (r.top < mid && r.bottom > mid) {
-      var a = +span.getAttribute('data-year-from'), b = +span.getAttribute('data-year-to');
-      year = String(Math.round(a + (b - a) * (mid - r.top) / r.height));
-    }
-    if (yr.textContent !== year) yr.textContent = year;
-  }
-  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(updateJourney); } }, { passive: true });
-  window.addEventListener('resize', updateJourney);
-  updateJourney();
 
   // Notes for her keepsake book
   var form = document.getElementById('note-form');
