@@ -150,12 +150,12 @@ section[id]{scroll-margin-top:68px}
 .figure-row b{font-weight:400;font-size:38px;line-height:1}
 .figure-row span{font-style:italic;font-size:16px;line-height:1.4}
 .band-lead{margin:40px 0 22px;text-align:center;font-style:italic;font-size:22px;line-height:1.4}
-.arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;text-align:center}
+.arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;text-align:center}
 .arches figure{margin:0}
 .arch{border:1px solid var(--gold-light);border-radius:90px 90px 0 0;padding:5px}
 .arch img{width:100%;height:220px;object-fit:cover;border-radius:85px 85px 0 0}
 .arches figcaption{margin-top:12px}
-.arches .t{display:block;font-style:italic;font-size:19px;line-height:1.3}
+.arches .t{display:block;font-style:italic;font-size:clamp(14px,4vw,18px);line-height:1.3;white-space:nowrap}
 .arches .s{display:block;margin-top:4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-pale)}
 
 /* Evening */
@@ -353,26 +353,27 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
     <div class="chapter" style="margin-top:48px">
       <div class="eyebrow">And every day in between</div>
-      <h3>Trips, weddings, flowers and family</h3>
+      <h3>Trips, weddings, friends and family</h3>
       <div class="gallery" id="gallery">
-        <button type="button" class="tile wide" data-full="images/spain-1200.webp" aria-label="View photo 1 of 14 larger"><img src="images/spain-640.webp" alt="Sheuli and her husband on a seaside lookout above a cove and white town in Spain" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 2 of 14 larger"><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 3 of 14 larger"><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/mexico-1200.webp" aria-label="View photo 4 of 14 larger"><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/wedding-hug-1200.webp" aria-label="View photo 5 of 14 larger"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/wedding-week-1200.webp" aria-label="View photo 6 of 14 larger"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="object-position:center 15%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/family-women-1200.webp" aria-label="View photo 7 of 14 larger" hidden><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/island-evening-1200.webp" aria-label="View photo 8 of 14 larger" hidden><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" style="object-position:center 70%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/flowers-trio-1200.webp" aria-label="View photo 9 of 14 larger" hidden><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" style="object-position:center 25%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/wedding-celebration-1200.webp" aria-label="View photo 10 of 14 larger" hidden><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="object-position:center 30%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/beach-1200.webp" aria-label="View photo 11 of 14 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-full="images/harbor-1200.webp" aria-label="View photo 12 of 14 larger" hidden><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 13 of 14 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile wide" data-full="images/garden-1200.webp" aria-label="View photo 14 of 14 larger" hidden><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/spain-1200.webp" aria-label="View photo 1 of 16 larger"><img src="images/spain-640.webp" alt="Sheuli and her husband on a seaside lookout above a cove and white town in Spain" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 2 of 16 larger"><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 3 of 16 larger"><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/family-gathering-1200.webp" aria-label="View photo 4 of 16 larger"><img src="images/family-gathering-640.webp" alt="Sheuli with her extended family, three generations, gathered on and around a sofa at home" style="object-position:center 88%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-hug-1200.webp" aria-label="View photo 5 of 16 larger"><img src="images/wedding-hug-640.webp" alt="Sheuli in a pink and gold sari, hugging her daughter the bride, with her husband on the other side" style="object-position:center 15%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/wedding-week-1200.webp" aria-label="View photo 6 of 16 larger"><img src="images/wedding-week-640.webp" alt="Sheuli in yellow, arm in arm with her daughter in green, in a park" style="object-position:center 15%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/mexico-1200.webp" aria-label="View photo 7 of 16 larger" hidden><img src="images/mexico-640.webp" alt="Sheuli and her husband in life jackets on a boat beside tall sea rocks in Mexico" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/island-evening-1200.webp" aria-label="View photo 8 of 16 larger" hidden><img src="images/island-evening-640.webp" alt="Sheuli with family in an arched resort lobby at dusk" style="object-position:center 70%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/flowers-trio-1200.webp" aria-label="View photo 9 of 16 larger" hidden><img src="images/flowers-trio-640.webp" alt="Sheuli in heart sunglasses with two young women, each holding a vase of flowers" style="object-position:center 25%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/family-women-1200.webp" aria-label="View photo 10 of 16 larger" hidden><img src="images/family-women-640.webp" alt="Sheuli smiling among a group of family women outdoors at sunset" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/beach-1200.webp" aria-label="View photo 11 of 16 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/harbor-1200.webp" aria-label="View photo 12 of 16 larger" hidden><img src="images/harbor-640.webp" alt="Sheuli and her husband at a harbor full of fishing boats" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/wedding-celebration-1200.webp" aria-label="View photo 13 of 16 larger" hidden><img src="images/wedding-celebration-640.webp" alt="Sheuli with her daughter, son-in-law and a family friend at a wedding celebration" style="object-position:center 30%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/mexico-city-1200.webp" aria-label="View photo 14 of 16 larger" hidden><img src="images/mexico-city-640.webp" alt="Sheuli in a straw hat and sunglasses with a friend on a terrace in Mexico City" style="object-position:center 70%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 15 of 16 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile wide" data-full="images/garden-1200.webp" aria-label="View photo 16 of 16 larger" hidden><img src="images/garden-640.webp" alt="Sheuli and her husband taking a selfie in a sunny garden" loading="lazy" decoding="async"></button>
       </div>
       <div class="gallery-foot">
-        <button type="button" class="btn btn-outline" id="show-all">See all 14 photos</button>
-        <p>Tap any photo to see it larger</p>
+        <button type="button" class="btn btn-outline" id="show-all">See all 16 photos</button>
       </div>
     </div>
   </section>
