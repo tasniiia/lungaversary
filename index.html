@@ -77,6 +77,27 @@ section[id]{scroll-margin-top:68px}
 .jump a{flex:0 0 auto;min-height:44px;display:flex;align-items:center;padding:0 12px;font-size:14px;color:var(--on-dark);text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent}
 .jump a.active{color:var(--linen);font-style:italic;border-bottom-color:var(--gold-light)}
 .jump .top{color:var(--gold-light);font-style:italic}
+.jump .yr{flex:0 0 auto;align-self:center;overflow:hidden;max-width:0;opacity:0;padding:0;margin-right:0;border:1px solid var(--gold-light);border-width:0;border-radius:999px;color:var(--gold-light);font-style:italic;font-size:14px;line-height:30px;font-variant-numeric:tabular-nums;white-space:nowrap;transition:max-width .3s ease,opacity .3s ease,padding .3s ease,margin .3s ease}
+.jump .yr.on{max-width:80px;opacity:1;padding:0 12px;margin-right:6px;border-width:1px}
+
+/* Journey line: fills from 2012 to 2026 while reading her story */
+.journey{position:fixed;z-index:15;top:calc(66px + env(safe-area-inset-top,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));left:max(calc(9px + env(safe-area-inset-left,0px)),calc(50% - 271px));width:2px;background:rgba(176,141,62,.22);border-radius:2px;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.journey.on{opacity:1}
+.journey-fill{position:absolute;inset:0;background:var(--gold);border-radius:2px;transform-origin:top;transform:scaleY(0)}
+.journey-dot{position:absolute;left:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(176,141,62,.25);top:0}
+@media (prefers-reduced-motion:reduce){.jump .yr,.journey{transition:none}}
+
+/* Donor counter */
+.tally{margin-top:22px;padding-top:20px;border-top:1px dashed var(--forest-line);display:flex;flex-direction:column;gap:14px}
+.tally-row{display:flex;align-items:baseline;gap:14px}
+.tally-n{font-style:italic;font-size:44px;line-height:1;color:var(--gold-light);font-variant-numeric:tabular-nums;min-width:1ch;transition:transform .4s ease}
+.tally-n.bump{transform:scale(1.15)}
+.tally-t{font-size:14px;line-height:1.5;color:var(--on-dark)}
+.tally-t[hidden],.tally-n[hidden]{display:none}
+.btn-check{border:1px dashed var(--gold-light);color:var(--linen);background:transparent}
+.btn-check:hover{background:#24432F}
+.btn-check[aria-pressed="true"]{border-style:solid;background:#24432F;color:var(--gold-light);cursor:default}
+@media (prefers-reduced-motion:reduce){.tally-n{transition:none}.tally-n.bump{transform:none}}
 
 /* Story */
 .story{padding:8px 0 40px}
@@ -229,6 +250,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
 <nav class="jump" id="jump" aria-label="Jump to a section" inert>
   <div class="jump-inner">
+    <span class="yr" id="yr" aria-hidden="true">2012</span>
     <a class="top" href="#top">Top</a>
     <a href="#story">Her story</a>
     <a href="#evening">Tonight’s agenda</a>
@@ -237,6 +259,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <a href="#note">Write Sheuli a note</a>
   </div>
 </nav>
+
+<div class="journey" id="journey" aria-hidden="true"><div class="journey-fill" id="journey-fill"></div><div class="journey-dot" id="journey-dot"></div></div>
 
 <header class="hero" id="top">
   <div class="hero-ten" aria-hidden="true">10</div>
@@ -268,7 +292,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     <div class="wrap">
       <h2 id="story-title">Her story</h2>
 
-      <div class="chapter">
+      <div class="chapter" data-year="2012">
         <div class="eyebrow">2012 · The beginning</div>
         <h3>Short of breath</h3>
         <p>In 2012, my mom went in for a routine doctor’s appointment. Her doctor noticed that just walking across the room made her oxygen levels drop far lower than they ever should have.</p>
@@ -276,7 +300,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <p>Along the way, she found her people. She joined a number of support groups for others facing the same diagnosis and met many incredible human beings, a few of whom are here tonight.</p>
       </div>
 
-      <div class="chapter">
+      <div class="chapter" data-year="2013">
         <div class="eyebrow">2013 – 2016 · The long road</div>
         <h3>Waiting to be let in</h3>
         <p>Year by year, her condition worsened. Oregon had no lung transplant program, so she went through months of testing to join the list at the University of Washington. But my dad’s work kept him moving from state to state, and with that much uncertainty, we couldn’t plan for a transplant at UW. She stepped off the list.</p>
@@ -284,7 +308,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <p class="pull"><span class="nw">They told her no one would take her.</span><br><span class="big">UCLA did.</span></p>
       </div>
 
-      <div class="chapter">
+      <div class="chapter" data-year="2016">
         <div class="eyebrow">December 2016 · 4:00 a.m.</div>
         <h3>The call</h3>
         <p>About a month later, the phone rang at four in the morning. Our bags were already packed. My mom flew to Los Angeles by air ambulance, I caught the first flight out, and my dad drove down from Sacramento, where he was working, to meet us there.</p>
@@ -304,7 +328,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div><b>24</b><span>hours to her<br>first steps</span></div>
       </div>
 
-      <div class="chapter">
+      <div class="chapter" data-year="2016">
         <div class="eyebrow">UCLA · Overnight</div>
         <h3>The longest night</h3>
         <p>The surgery ran through the night, and none of us slept. Our phones never stopped buzzing with calls and texts from everyone who loves her, sending strength, prayers and positivity, asking for updates and offering whatever help they could.</p>
@@ -320,7 +344,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         </figure>
       </div>
 
-      <div class="chapter" style="margin-top:44px">
+      <div class="chapter" data-year="2016" style="margin-top:44px">
         <div class="eyebrow">Winter 2016 – Spring 2017</div>
         <h3>Learning to breathe again</h3>
         <p>After three weeks in the ICU, she moved into Tiverton House, UCLA’s hotel for patients and their families. We were supposed to stay three months. She recovered so well that we went home after two.</p>
@@ -342,7 +366,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     </div>
   </section>
 
-  <section class="after wrap" aria-label="After the transplant">
+  <section class="after wrap" aria-label="After the transplant" data-year-from="2017" data-year-to="2026">
     <div class="eyebrow">2017 – 2026 · After</div>
     <h3>Getting her life back</h3>
     <p>As she got stronger, my mom and I explored Los Angeles together, wandering markets and landmarks and Ubering anywhere we could, from the Griffith Observatory to the Dolby Theatre to Chinatown and everywhere in between. She had been handed a second chance, and she wasn’t going to waste a minute of it.</p>
@@ -393,7 +417,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     </div>
   </section>
 
-  <section class="band" aria-label="Ten years, by the numbers">
+  <section class="band" aria-label="Ten years, by the numbers" data-year="2026" data-journey-end>
     <div class="wrap">
       <div class="eyebrow">Ten years, by the numbers</div>
       <div class="figure-row"><b>3,650</b><span>days she was never promised</span></div>
@@ -468,6 +492,13 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <h3>Register as an organ donor</h3>
         <p>One donor can save up to eight lives. Registering takes about two minutes, and you can do it right here at the table.</p>
         <a class="btn btn-light" href="https://registerme.org" target="_blank" rel="noopener">Register at RegisterMe.org <span aria-hidden="true">↗</span></a>
+        <div class="tally">
+          <div class="tally-row" aria-live="polite">
+            <span class="tally-n" id="tally-n" hidden>0</span>
+            <span class="tally-t" id="tally-t">Be the first to register tonight.</span>
+          </div>
+          <button type="button" class="btn btn-check" id="registered" aria-pressed="false">I just registered</button>
+        </div>
       </div>
       <div class="way">
         <div class="eyebrow">Give in her honor</div>
@@ -627,6 +658,78 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
   });
   stage.addEventListener('click', function (e) { if (e.target === stage) closeLb(); });
+
+  // Live donor counter
+  var tallyN = document.getElementById('tally-n');
+  var tallyT = document.getElementById('tally-t');
+  var regBtn = document.getElementById('registered');
+  var shown = -1, mine = false;
+  try { mine = localStorage.getItem('lungaversary-registered') === '1'; } catch (e) {}
+  function paint(c) {
+    if (typeof c !== 'number') return;
+    if (c === 0) { tallyN.hidden = true; tallyT.textContent = 'Be the first to register tonight.'; }
+    else {
+      tallyN.hidden = false; tallyN.textContent = c.toLocaleString();
+      tallyT.textContent = (c === 1 ? 'guest has' : 'guests have') + ' registered as organ donors tonight' + (mine ? ', including you. Thank you.' : '.');
+      if (shown !== -1 && c !== shown) { tallyN.classList.add('bump'); setTimeout(function () { tallyN.classList.remove('bump'); }, 450); }
+    }
+    shown = c;
+  }
+  function markMine() { regBtn.setAttribute('aria-pressed', 'true'); regBtn.textContent = 'Registered · thank you'; }
+  if (mine) markMine();
+  function loadCount() {
+    fetch('/api/donors', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) { if (d) paint(d.count); }).catch(function () {});
+  }
+  loadCount();
+  setInterval(function () { if (!document.hidden) loadCount(); }, 20000);
+  regBtn.addEventListener('click', function () {
+    if (mine) return;
+    regBtn.disabled = true;
+    fetch('/api/donors', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        mine = true;
+        try { localStorage.setItem('lungaversary-registered', '1'); } catch (e) {}
+        markMine(); paint(d.count);
+      })
+      .catch(function () { tallyT.textContent = 'We couldn’t record that just now. Please try again in a moment.'; })
+      .finally(function () { regBtn.disabled = false; });
+  });
+
+  // Journey line through her story, 2012 to 2026
+  var journey = document.getElementById('journey');
+  var jFill = document.getElementById('journey-fill');
+  var jDot = document.getElementById('journey-dot');
+  var yr = document.getElementById('yr');
+  var storyStart = document.getElementById('story');
+  var storyEnd = document.querySelector('[data-journey-end]');
+  var marks = Array.prototype.slice.call(document.querySelectorAll('[data-year]'));
+  var span = document.querySelector('[data-year-from]');
+  var ticking = false;
+  function updateJourney() {
+    ticking = false;
+    var vh = window.innerHeight, mid = vh * 0.5;
+    var top = storyStart.getBoundingClientRect().top;
+    var bottom = storyEnd.getBoundingClientRect().bottom;
+    var inStory = top < mid && bottom > mid;
+    journey.classList.toggle('on', inStory);
+    yr.classList.toggle('on', inStory);
+    if (!inStory) return;
+    var p = Math.min(1, Math.max(0, (mid - top) / (bottom - top)));
+    jFill.style.transform = 'scaleY(' + p + ')';
+    jDot.style.top = (p * 100) + '%';
+    var year = '2012';
+    marks.forEach(function (m) { if (m.getBoundingClientRect().top < mid) year = m.getAttribute('data-year'); });
+    var r = span.getBoundingClientRect();
+    if (r.top < mid && r.bottom > mid) {
+      var a = +span.getAttribute('data-year-from'), b = +span.getAttribute('data-year-to');
+      year = String(Math.round(a + (b - a) * (mid - r.top) / r.height));
+    }
+    if (yr.textContent !== year) yr.textContent = year;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(updateJourney); } }, { passive: true });
+  window.addEventListener('resize', updateJourney);
+  updateJourney();
 
   // Notes for her keepsake book
   var form = document.getElementById('note-form');

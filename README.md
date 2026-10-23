@@ -30,6 +30,12 @@ Open these links in your browser (replace `YOUR_KEY` with the key from step 4):
 
 Without the key, those links show "Not found", so guests can't read each other's notes.
 
+## Live donor counter
+
+When guests tap **I just registered** in the Pass it on section, the count goes up for everyone (each phone counts once). It uses the same Blob store as the notes, so there's nothing extra to set up.
+
+To show it on a TV or projector during the toasts, open `https://YOUR-SITE.vercel.app/count` in a browser and make it full screen. It refreshes on its own every few seconds.
+
 ## Before the event — fill these in
 
 Search `index.html` for `[` to find them:

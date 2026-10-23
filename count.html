@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Donors Tonight · Sheuli</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap">
+<style>
+:root{--forest:#1E3A2A;--linen:#F6F2E9;--gold:#D4B46A;--muted:#C9D2C1}
+html,body{height:100%;margin:0}
+body{background:var(--forest);color:var(--linen);font-family:'Libre Baskerville',Georgia,serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:5vh 6vw;box-sizing:border-box}
+.label{font-size:clamp(14px,1.6vw,22px);letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.n{font-style:italic;font-size:clamp(120px,26vw,360px);line-height:1;margin:3vh 0 2vh;font-variant-numeric:tabular-nums;transition:transform .4s ease}
+.n.bump{transform:scale(1.08)}
+.line{font-style:italic;font-size:clamp(20px,3vw,40px);line-height:1.4}
+.sub{margin-top:3vh;font-size:clamp(14px,1.6vw,22px);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.n{transition:none}.n.bump{transform:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="label">Celebrating Sheuli · Ten years</div>
+  <div class="n" id="n" aria-live="polite">0</div>
+  <div class="line" id="line">guests have registered as organ donors tonight</div>
+  <div class="sub">Tap your card · Pass it on · Register at RegisterMe.org</div>
+</main>
+<script>
+(function () {
+  var el = document.getElementById('n'), line = document.getElementById('line'), last = -1;
+  function load() {
+    fetch('/api/donors', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+      var c = d.count || 0;
+      if (c !== last) {
+        el.textContent = c.toLocaleString();
+        line.textContent = c === 1 ? 'guest has registered as an organ donor tonight' : 'guests have registered as organ donors tonight';
+        if (last !== -1) { el.classList.add('bump'); setTimeout(function () { el.classList.remove('bump'); }, 450); }
+        last = c;
+      }
+    }).catch(function () {});
+  }
+  load(); setInterval(load, 8000);
+})();
+</script>
+</body>
+</html>
