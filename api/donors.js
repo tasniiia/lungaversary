@@ -1,28 +1,41 @@
 // Live count of guests who registered as organ donors tonight.
 //
 //   GET  /api/donors  -> { count }
-//   POST /api/donors  -> records one registration, returns { count }
+//   POST /api/donors  -> records one registration per phone, returns { count }
 //
-// Uses the same private Vercel Blob store as the notes. Each tap is one tiny
-// file under donors/, so the count is simply how many files exist.
+// Each phone gets one file, donors/<phone>.json. A second tap from the same phone
+// finds the file already there and is not counted again.
 
 import { put, list } from '@vercel/blob';
+import { deviceKey, json, readBody } from './_shared.js';
 
 export default async function handler(request) {
-  if (request.method === 'POST') {
-    let body = {};
-    try { body = await request.json(); } catch { /* empty body is fine */ }
-    if (body && body.website) return json({ count: await countDonors() }); // bot trap
+  if (request.method === 'GET') return json({ count: await countDonors() });
+  if (request.method !== 'POST') {
+    return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, POST' } });
+  }
 
-    await put(`donors/${Date.now()}.json`, JSON.stringify({ at: new Date().toISOString() }), {
+  const body = await readBody(request);
+  if (body.website) return json({ count: await countDonors() }); // bot trap
+
+  const key = deviceKey(body.device);
+  if (key === deviceKey('unknown')) return json({ error: 'Missing device' }, 400);
+
+  let added = true;
+  try {
+    await put(`donors/${key}.json`, JSON.stringify({ at: new Date().toISOString() }), {
       access: 'private',
-      addRandomSuffix: true,
+      addRandomSuffix: false,
+      allowOverwrite: false,
       contentType: 'application/json',
     });
-    return json({ count: await countDonors() }, 201);
+  } catch (err) {
+    // Either this phone was already counted (the file exists) or something went wrong.
+    const existing = await list({ prefix: `donors/${key}.json`, limit: 1 });
+    if (!existing.blobs.length) return json({ error: 'Could not record that' }, 500);
+    added = false;
   }
-  if (request.method === 'GET') return json({ count: await countDonors() });
-  return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, POST' } });
+  return json({ count: await countDonors(), added }, added ? 201 : 200);
 }
 
 async function countDonors() {
@@ -34,11 +47,4 @@ async function countDonors() {
     cursor = page.hasMore ? page.cursor : undefined;
   } while (cursor);
   return count;
-}
-
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-  });
 }

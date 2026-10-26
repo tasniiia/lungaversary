@@ -24,17 +24,27 @@ Write the site's URL to the card as a **URL record** (any free NFC writer app, e
 
 Open these links in your browser (replace `YOUR_KEY` with the key from step 4):
 
-- `https://YOUR-SITE.vercel.app/api/notes?key=YOUR_KEY` — every note on a printable page (File → Print → Save as PDF for the keepsake book)
-- `...?key=YOUR_KEY&format=csv` — a spreadsheet
-- `...?key=YOUR_KEY&format=json` — raw data
+- `https://lungaversary.vercel.app/api/notes?key=YOUR_KEY&format=review` — **read every note first.** Tap "Hide from the book" on any test notes or duplicates. Nothing is deleted; you can show it again anytime.
+- `https://lungaversary.vercel.app/api/notes?key=YOUR_KEY` — the keepsake book as one printable page, without hidden notes (File → Print → Save as PDF)
+- `...?key=YOUR_KEY&format=csv` — a spreadsheet, without hidden notes
+- `...?key=YOUR_KEY&format=json&all=1` — raw data, including hidden notes
 
 Without the key, those links show "Not found", so guests can't read each other's notes.
 
+Each phone can add a note every 20 seconds, up to 10 notes, which stops accidental double taps and spam. (Limits go by phone, not by Wi-Fi, so a whole room on the venue Wi-Fi is fine.)
+
 ## Live donor counter
 
-When guests tap **I just registered** in the Pass it on section, the count goes up for everyone (each phone counts once). It uses the same Blob store as the notes, so there's nothing extra to set up.
+When guests tap **I just registered** in the Pass it on section, the count goes up for everyone. Each phone counts once, checked on the server. It uses the same Blob store as the notes, so there's nothing extra to set up.
 
 To show it on a TV or projector during the toasts, open `https://YOUR-SITE.vercel.app/count` in a browser and make it full screen. It refreshes on its own every few seconds.
+
+## Privacy, speed and analytics
+
+- The site asks search engines not to list it (a `noindex` tag, a header and `robots.txt`), so it only reaches people with the link or the card.
+- Fonts are hosted on the site itself (`fonts/`, under the SIL Open Font License in `fonts/OFL.txt`), so the page needs no outside requests to look right.
+- Vercel Web Analytics is connected through the small script in `index.html`. Visits show up under the project's **Analytics** tab.
+- **Evening mode** turns on by itself from 3:30 pm on December 19, and for any phone set to dark mode. Guests can switch with the button at the top right of the page.
 
 ## Before the event — fill these in
 
