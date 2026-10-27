@@ -152,13 +152,13 @@ section[id]{scroll-margin-top:68px}
 .window-col{display:flex;flex-direction:column;align-items:center;gap:8px}
 .pane{position:relative;width:100%;height:100%;border-radius:76px;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,.25)}
 .window img{width:100%;height:100%;object-fit:cover;object-position:34% 62%}
-.shade{--open:.17;position:absolute;inset:0;padding:0;border:0;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;background:repeating-linear-gradient(#F1ECE2 0 11px,#E3DCCD 11px 12px);box-shadow:0 3px 6px rgba(27,38,30,.28);transform:translateY(calc(var(--open) * -91%));transition:transform .55s cubic-bezier(.3,.7,.2,1)}
+.shade{--open:.07;position:absolute;inset:0;padding:0;border:0;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;background:repeating-linear-gradient(#F1ECE2 0 11px,#E3DCCD 11px 12px);box-shadow:0 3px 6px rgba(27,38,30,.28);transform:translateY(calc(var(--open) * -91%));transition:transform .55s cubic-bezier(.3,.7,.2,1)}
 .shade.dragging{transition:none;cursor:grabbing}
 .shade .tab{position:absolute;left:50%;bottom:7px;width:34px;height:7px;margin-left:-17px;border-radius:4px;background:#B9AE96;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 .shade:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
-.window.nudge{animation:hop 3.6s ease-in-out 1.5s infinite}
-@keyframes hop{0%,72%,100%{transform:translateY(0)}78%{transform:translateY(-7px)}84%{transform:translateY(0)}89%{transform:translateY(-3px)}94%{transform:translateY(0)}}
-@media (prefers-reduced-motion:reduce){.shade{transition:none}.window.nudge{animation:none}}
+.shade.nudge{animation:hop 3.6s ease-in-out 1.5s infinite}
+@keyframes hop{0%,72%,100%{translate:0 0}78%{translate:0 -12px}84%{translate:0 0}89%{translate:0 -5px}94%{translate:0 0}}
+@media (prefers-reduced-motion:reduce){.shade{transition:none}.shade.nudge{animation:none}}
 .air-cap{margin:0 0 6px;font-style:italic;font-size:15px;line-height:1.4;color:var(--heading)}
 .air-cap span{display:block;margin-top:4px;font-size:12px;color:var(--sub)}
 :root[data-mode="evening"] .window{background:#D9D2C2}
@@ -371,10 +371,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div class="air-window">
           <p class="air-cap">The air ambulance that flew her to LA<span>our goodbye on the tarmac</span></p>
           <div class="window-col">
-            <div class="window nudge" id="window">
+            <div class="window">
               <div class="pane" id="pane">
                 <img src="images/tarmac-640.webp" alt="Family waving goodbye on the tarmac, seen from inside the air ambulance doorway" loading="lazy" decoding="async">
-                <button type="button" class="shade" id="shade" aria-pressed="false" aria-label="Lift the window shade to see our goodbye"><span class="tab" aria-hidden="true"></span></button>
+                <button type="button" class="shade nudge" id="shade" aria-pressed="false" aria-label="Lift the window shade to see our goodbye"><span class="tab" aria-hidden="true"></span></button>
               </div>
             </div>
           </div>
@@ -783,8 +783,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
   // Plane window shade: drag it up, or tap to lift and lower
   (function () {
-    var shade = document.getElementById('shade'), pane = document.getElementById('pane'), win = document.getElementById('window');
-    var PEEK = 0.17;
+    var shade = document.getElementById('shade'), pane = document.getElementById('pane');
+    var PEEK = 0.07;
     if (!shade) return;
     var open = PEEK, startY = 0, startOpen = 0, moved = 0, dragging = false;
     function set(v) { open = Math.max(0, Math.min(1, v)); shade.style.setProperty('--open', open.toFixed(3)); }
@@ -793,10 +793,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       var up = v >= 0.5;
       shade.setAttribute('aria-pressed', up ? 'true' : 'false');
       shade.setAttribute('aria-label', up ? 'Lower the window shade' : 'Lift the window shade to see our goodbye');
-      win.classList.remove('nudge');
+      shade.classList.remove('nudge');
     }
     shade.addEventListener('pointerdown', function (e) {
-      e.preventDefault(); win.classList.remove('nudge'); dragging = true; moved = 0; startY = e.clientY; startOpen = open;
+      e.preventDefault(); shade.classList.remove('nudge'); dragging = true; moved = 0; startY = e.clientY; startOpen = open;
       shade.classList.add('dragging'); shade.setPointerCapture(e.pointerId);
     });
     shade.addEventListener('pointermove', function (e) {
@@ -806,12 +806,12 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     });
     function end() {
       if (!dragging) return; dragging = false;
-      if (moved < 6) settle(startOpen >= 0.5 ? PEEK : 1);
-      else settle(open >= 0.5 ? 1 : PEEK);
+      if (moved < 6) settle(startOpen >= 0.5 ? 0 : 1);
+      else settle(open >= 0.5 ? 1 : 0);
     }
     shade.addEventListener('pointerup', end);
     shade.addEventListener('pointercancel', end);
-    shade.addEventListener('click', function (e) { if (e.detail === 0) settle(open >= 0.5 ? PEEK : 1); });
+    shade.addEventListener('click', function (e) { if (e.detail === 0) settle(open >= 0.5 ? 0 : 1); });
   })();
 
   // Little celebrations: petals for new donors, gold flecks for gifts
