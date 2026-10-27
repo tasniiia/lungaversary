@@ -183,6 +183,36 @@ section[id]{scroll-margin-top:68px}
 .places .list{margin-top:14px;font-style:italic;font-size:19px;line-height:1.75;color:var(--heading)}
 .places .dot{color:var(--gold)}
 .places .more{margin-top:6px;font-size:13px;color:var(--sub)}
+/* Stamp pile: one stamp per place, tossed in an overlapping pile; tap to lift one */
+.places{overflow-x:clip}
+.pile{position:relative;max-width:420px;margin:14px auto 0}
+.stamp-item{position:absolute;left:0;top:0;padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;transform-origin:50% 50%;filter:drop-shadow(0 1px 1.5px rgba(27,38,30,.3));transition:transform .45s cubic-bezier(.3,.7,.2,1),filter .45s;-webkit-tap-highlight-color:transparent}
+.stamp-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.stamp-item.lifted{filter:drop-shadow(0 12px 16px rgba(27,38,30,.32))}
+.stamp-full{position:absolute;left:0;top:0;width:216px;height:264px;transform:scale(var(--s));transform-origin:0 0;text-align:center}
+/* perforated paper: a grid of holes, kept only in the 6px edge */
+.stamp{display:block;width:100%;height:100%;padding:6px;background:#FFFDF7;
+  -webkit-mask:radial-gradient(circle at 6px 6px,transparent 4px,#000 4.6px) -6px -6px/12px 12px,linear-gradient(#000 0 0) content-box;
+  mask:radial-gradient(circle at 6px 6px,transparent 4px,#000 4.6px) -6px -6px/12px 12px,linear-gradient(#000 0 0) content-box}
+.stamp-art{position:relative;display:flex;flex-direction:column;align-items:center;height:100%;padding:10px 12px 12px;background:var(--bg);color:var(--fg)}
+.stamp-art::after{content:"";position:absolute;inset:5px;border:1px solid var(--fg);opacity:.28;pointer-events:none}
+.stamp-top{align-self:stretch;display:flex;line-height:1;padding:2px 3px 0}
+.stamp-den{font-size:24px;font-style:italic}
+.stamp-den small{font-size:13px;margin-left:2px;position:relative;top:-8px}
+.stamp-art svg{flex:none;width:150px;height:150px;margin:4px 0}
+.stamp-nm{font-style:italic;font-size:17px;line-height:1.1;white-space:nowrap}
+.stamp-lv{margin-top:6px;padding-left:.45em;font-size:6.5px;letter-spacing:.45em;text-transform:uppercase;opacity:.45}
+.stamp-art svg .f{fill:var(--fg)}
+.stamp-art svg .a{fill:var(--ac)}
+.stamp-art svg .b{fill:var(--bg)}
+.stamp-art svg .k{fill:none;stroke:var(--fg);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.stamp-art svg .ka{fill:none;stroke:var(--ac);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.stamp-art svg .kb{fill:none;stroke:var(--bg);stroke-width:1.4;stroke-linecap:round}
+.pile-foot{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:16px}
+.pile-hint{font-size:13px;font-style:italic;color:var(--sub)}
+.pile-shuffle{min-height:40px;padding:0 16px;border:1px solid var(--gold);background:transparent;color:var(--heading);font:inherit;font-size:13px;cursor:pointer}
+.pile-shuffle:hover{background:var(--forest);border-color:var(--forest);color:var(--linen)}
+@media (prefers-reduced-motion:reduce){.stamp-item{transition:none}}
 
 /* Photo gallery */
 .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
@@ -191,13 +221,6 @@ section[id]{scroll-margin-top:68px}
 .tile:hover{transform:translateY(-2px)}
 .tile img{width:100%;height:220px;object-fit:cover}
 .tile.wide{grid-column:span 2}
-.tile[data-egg]{position:relative;cursor:pointer}
-.tile[data-egg] img{transform-origin:50% 62%}
-.tile.breathe img{animation:breathe 1.7s ease-in-out}
-@keyframes breathe{0%{transform:scale(1)}42%{transform:scale(1.07,1.1)}58%{transform:scale(1.07,1.1)}100%{transform:scale(1)}}
-.heart{position:absolute;left:50%;top:40%;pointer-events:none;opacity:0;animation:rise 1.8s ease-out forwards;z-index:2}
-@keyframes rise{0%{opacity:0;transform:translate(-50%,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),-170px) scale(1.15) rotate(var(--rot))}}
-@media (prefers-reduced-motion:reduce){.tile.breathe img{animation:none}.heart{display:none}}
 .tile.wide img{height:210px}
 @media (min-width:520px){.tile img{height:250px}.tile.wide img{height:260px}}
 @media (prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
@@ -232,10 +255,23 @@ section[id]{scroll-margin-top:68px}
 .arches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:center;margin:0 calc(var(--gutter) / -2)}
 @media (min-width:560px){.arches{margin:0;gap:20px}}
 .arches figure{margin:0}
-.arch{border:1px solid var(--gold-light);border-radius:999px 999px 0 0;padding:5px}
-.arch img{width:100%;height:300px;object-fit:cover;border-radius:999px 999px 0 0}
-@media (min-width:520px){.arch img{height:340px}}
-.arches figcaption{margin-top:12px}
+/* Face-down arches: tap to turn over; the caption appears only once the photo is face up */
+.flip{display:block;width:100%;padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;perspective:1100px;-webkit-tap-highlight-color:transparent}
+.flip:focus-visible{outline:2px solid var(--gold-light);outline-offset:4px}
+.flip-in{position:relative;display:block;height:300px;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,.7,.2,1)}
+@media (min-width:520px){.flip-in{height:340px}}
+.flip[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:block;border:1px solid var(--gold-light);border-radius:999px 999px 0 0;padding:5px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face .in{position:relative;display:block;height:100%;border-radius:999px 999px 0 0;overflow:hidden}
+.face.back{transform:rotateY(180deg)}
+.face.back img{width:100%;height:100%;object-fit:cover}
+.face.front .in{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#F7F1E3,#EDE4CF)}
+.face.front .in::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(80,60,20,.025) 0 1px,transparent 1px 4px)}
+.face.front .in::after{content:"";position:absolute;inset:7px;border:1px solid rgba(176,141,62,.6);border-radius:999px 999px 0 0}
+.face.front .hint{position:relative;font-style:italic;font-size:13px;line-height:1.4;color:#6B6248}
+.arches figcaption{margin-top:12px;opacity:0;transform:translateY(6px);transition:opacity .45s .45s,transform .45s .45s}
+.arches figure.on figcaption{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.flip-in,.arches figcaption{transition:none}}
 .arches .t{display:block;font-style:italic;font-size:clamp(14px,4vw,18px);line-height:1.3;white-space:nowrap}
 .arches .s{display:block;margin-top:4px;font-size:clamp(9.5px,2.8vw,11.5px);white-space:nowrap;color:var(--gold-pale)}
 
@@ -476,7 +512,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <button type="button" class="tile wide" data-full="images/dressed-up-1200.webp" aria-label="View photo 27 of 30 larger" hidden><img src="images/dressed-up-640.webp" alt="Sheuli, her husband, daughter and son-in-law dressed up at a formal event" loading="lazy" decoding="async"></button>
         <button type="button" class="tile wide" data-full="images/beach-1200.webp" aria-label="View photo 28 of 30 larger" hidden><img src="images/beach-640.webp" alt="Sheuli, her husband and daughter taking a selfie on a sunny beach" loading="lazy" decoding="async"></button>
         <button type="button" class="tile" data-full="images/holiday-flowers-1200.webp" aria-label="View photo 29 of 30 larger" hidden><img src="images/holiday-flowers-640.webp" alt="Sheuli in a red holiday sweater holding a large bouquet of flowers" style="object-position:center 20%" loading="lazy" decoding="async"></button>
-        <button type="button" class="tile" data-egg data-full="images/plush-lungs-1200.webp" aria-label="Sheuli with a pair of plush lungs. Tap for a surprise." hidden><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
+        <button type="button" class="tile" data-full="images/plush-lungs-1200.webp" aria-label="View photo 30 of 30 larger" hidden><img src="images/plush-lungs-640.webp" alt="Sheuli smiling while holding a pair of plush smiling lungs" style="object-position:center 45%" loading="lazy" decoding="async"></button>
       </div>
       <div class="gallery-foot">
         <button type="button" class="btn btn-outline" id="show-all">See all 30 photos</button>
@@ -485,7 +521,12 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
     <div class="places">
       <div class="eyebrow">Everywhere she’s been since</div>
-      <p class="list">Alaska <span class="dot">·</span> California <span class="dot">·</span> Canada <span class="dot">·</span> Connecticut <span class="dot">·</span> Florida <span class="dot">·</span> France <span class="dot">·</span> Hawaii <span class="dot">·</span> Mexico <span class="dot">·</span> Michigan <span class="dot">·</span> New&nbsp;Jersey <span class="dot">·</span> New&nbsp;Mexico <span class="dot">·</span> Spain <span class="dot">·</span> Switzerland <span class="dot">·</span> Virginia <span class="dot">·</span> Washington</p>
+      <div class="pile" id="pile" role="group" aria-label="A stamp for each place she’s been since"></div>
+      <noscript><p class="list">Alaska <span class="dot">·</span> California <span class="dot">·</span> Canada <span class="dot">·</span> Connecticut <span class="dot">·</span> Florida <span class="dot">·</span> France <span class="dot">·</span> Hawaii <span class="dot">·</span> Mexico <span class="dot">·</span> Michigan <span class="dot">·</span> New&nbsp;Jersey <span class="dot">·</span> New&nbsp;Mexico <span class="dot">·</span> Spain <span class="dot">·</span> Switzerland <span class="dot">·</span> Virginia <span class="dot">·</span> Washington</p></noscript>
+      <div class="pile-foot" id="pile-foot" hidden>
+        <span class="pile-hint">Tap a stamp to lift it</span>
+        <button type="button" class="pile-shuffle" id="shuffle">Shuffle the pile</button>
+      </div>
       <p class="more">…and more to come.</p>
     </div>
   </section>
@@ -498,12 +539,18 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <p class="band-lead">And the days I was never<br>sure she would see</p>
       <div class="arches">
         <figure>
-          <div class="arch"><img src="images/graduation-640.webp" alt="Sheuli and her husband looking at their daughter’s Oregon State University diploma" loading="lazy" decoding="async"></div>
-          <figcaption><span class="t">My college graduation</span><span class="s">Oregon State University, 2019</span></figcaption>
+          <button type="button" class="flip" aria-pressed="false" aria-label="A face-down photo. Tap to turn it over."><span class="flip-in">
+            <span class="face front"><span class="in"><span class="hint">Tap to turn over</span></span></span>
+            <span class="face back"><span class="in"><img src="images/graduation-640.webp" alt="Sheuli and her husband looking at their daughter’s Oregon State University diploma" loading="lazy" decoding="async"></span></span>
+          </span></button>
+          <figcaption aria-hidden="true"><span class="t">My college graduation</span><span class="s">Oregon State University, 2019</span></figcaption>
         </figure>
         <figure>
-          <div class="arch"><img src="images/wedding-family-640.webp" alt="Sheuli and her husband with their daughter and son-in-law on the wedding day" style="object-position:center 30%" loading="lazy" decoding="async"></div>
-          <figcaption><span class="t">My wedding</span><span class="s">The Oregon Golf Club, 2023</span></figcaption>
+          <button type="button" class="flip" aria-pressed="false" aria-label="A face-down photo. Tap to turn it over."><span class="flip-in">
+            <span class="face front"><span class="in"><span class="hint">Tap to turn over</span></span></span>
+            <span class="face back"><span class="in"><img src="images/wedding-family-640.webp" alt="Sheuli and her husband with their daughter and son-in-law on the wedding day" style="object-position:center 30%" loading="lazy" decoding="async"></span></span>
+          </span></button>
+          <figcaption aria-hidden="true"><span class="t">My wedding</span><span class="s">The Oregon Golf Club, 2023</span></figcaption>
         </figure>
       </div>
     </div>
@@ -712,27 +759,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     lbCount.textContent = (idx + 1) + ' / ' + tilesEls.length;
     (new Image()).src = tilesEls[(idx + 1) % tilesEls.length].getAttribute('data-full');
   }
-  var heartColors = ['#E8807F', '#F2A7A3', '#D4B46A', '#E8807F', '#F6C5C0'];
-  function breathe(t) {
-    t.classList.remove('breathe'); void t.offsetWidth; t.classList.add('breathe');
-    for (var k = 0; k < 6; k++) {
-      (function (k) {
-        setTimeout(function () {
-          var h = document.createElement('span');
-          h.className = 'heart'; h.setAttribute('aria-hidden', 'true');
-          h.innerHTML = '<svg width="18" height="16" viewBox="0 0 24 21"><path fill="' + heartColors[k % heartColors.length] + '" d="M12 21s-9-5.6-9-12A5 5 0 0 1 12 6a5 5 0 0 1 9 3c0 6.4-9 12-9 12z"/></svg>';
-          h.style.setProperty('--dx', Math.round(Math.random() * 140 - 70) + 'px');
-          h.style.setProperty('--rot', Math.round(Math.random() * 40 - 20) + 'deg');
-          h.style.marginLeft = Math.round(Math.random() * 60 - 30) + 'px';
-          t.appendChild(h);
-          setTimeout(function () { h.remove(); }, 1900);
-        }, 450 + k * 120);
-      })(k);
-    }
-  }
   tilesEls.forEach(function (t, i) {
     t.addEventListener('click', function () {
-      if (t.hasAttribute('data-egg')) { breathe(t); return; }
       opener = t; show(i);
       if (lb.showModal) lb.showModal(); else lb.setAttribute('open', '');
       document.documentElement.style.overflow = 'hidden';
@@ -982,6 +1010,180 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
   });
   document.getElementById('another').addEventListener('click', function () {
     thanks.hidden = true; form.hidden = false; form.note.focus();
+  });
+})();
+// Stamp pile: a stamp designed for each place, tossed in an overlapping pile; tap one to lift it
+(function () {
+  var pile = document.getElementById('pile');
+  if (!pile) return;
+  var C = { forest: '#1E3A2A', moss: '#4A5C2F', sage: '#7E9472', gold: '#C9A65A', cream: '#F3EBD7', teal: '#2F4A3E', pale: '#E6D3A0' };
+  function r(n) { return Math.round(n * 10) / 10; }
+  function xy(cx, cy, rad, deg) { var a = deg * Math.PI / 180; return [r(cx + rad * Math.cos(a)), r(cy + rad * Math.sin(a))]; }
+  function pt(cx, cy, rad, deg) { return xy(cx, cy, rad, deg).join(' '); }
+
+  // Mexico: papel picado flags
+  function flag(x, y, cls) {
+    var z = ''; for (var i = 0; i < 5; i++) z += ' l-2 4 l-2 -4';
+    return '<path class="' + cls + '" d="M' + x + ' ' + y + ' h20 v20' + z + 'Z"/>' +
+      '<path class="b" d="M' + (x + 10) + ' ' + (y + 5) + ' l4 5 l-4 5 l-4 -5Z"/><circle class="b" cx="' + (x + 4.5) + '" cy="' + (y + 4.5) + '" r="1.6"/><circle class="b" cx="' + (x + 15.5) + '" cy="' + (y + 4.5) + '" r="1.6"/><circle class="b" cx="' + (x + 4.5) + '" cy="' + (y + 15) + '" r="1.3"/><circle class="b" cx="' + (x + 15.5) + '" cy="' + (y + 15) + '" r="1.3"/>';
+  }
+  function picado() {
+    var s = '<path class="k" style="stroke-width:1.4" d="M2 8 Q60 22 118 8 M2 46 Q60 60 118 46 M2 84 Q60 98 118 84"/>';
+    [[12, 10], [36, 13], [60, 13], [84, 10]].forEach(function (p, i) { s += flag(p[0], p[1], i % 2 ? 'a' : 'f'); });
+    [[24, 50], [48, 52], [72, 50]].forEach(function (p, i) { s += flag(p[0], p[1], i % 2 ? 'f' : 'a'); });
+    [[12, 86], [36, 89], [60, 89], [84, 86]].forEach(function (p, i) { s += flag(p[0], p[1], i % 2 ? 'a' : 'f'); });
+    return s;
+  }
+  // Spain: an open fan
+  function fan() {
+    var s = '', n = 10;
+    for (var i = 0; i < n; i++) { var a0 = 196 + i * 14.8, a1 = a0 + 14.8; s += '<path class="' + (i % 2 ? 'a' : 'f') + '" d="M60 98 L' + pt(60, 98, 54, a0) + ' L' + pt(60, 98, 54, a1) + 'Z"/>'; }
+    s += '<path class="kb" style="stroke-width:1.6" d="M' + pt(60, 98, 44, 196) + ' A44 44 0 0 1 ' + pt(60, 98, 44, 344) + '"/>';
+    for (var j = 0; j < 10; j++) { var q = xy(60, 98, 49, 203.4 + j * 14.8); s += '<circle class="b" cx="' + q[0] + '" cy="' + q[1] + '" r="1.6"/>'; }
+    return s + '<circle class="a" cx="60" cy="98" r="6"/><circle class="b" cx="60" cy="98" r="2"/><path class="k" d="M60 104 L60 112"/><circle class="f" cx="60" cy="115" r="2.5"/>';
+  }
+  // New Jersey: boardwalk Ferris wheel
+  function wheel() {
+    var s = '<path class="k" d="M60 50 L42 100 M60 50 L78 100"/><circle class="k" cx="60" cy="50" r="32"/><circle class="k" style="stroke-width:1.5" cx="60" cy="50" r="24"/>';
+    for (var i = 0; i < 8; i++) { var a = i * 45, p = xy(60, 50, 32, a); s += '<path class="k" style="stroke-width:1.5" d="M60 50 L' + p.join(' ') + '"/><circle class="' + (i % 2 ? 'a' : 'f') + '" cx="' + p[0] + '" cy="' + (p[1] + 4) + '" r="4.5"/>'; }
+    s += '<circle class="f" cx="60" cy="50" r="4"/><rect class="f" x="0" y="100" width="120" height="6"/>';
+    for (var k = 6; k < 120; k += 12) s += '<path class="k" style="stroke-width:2" d="M' + k + ' 106 V114"/>';
+    return s + '<path class="ka" d="M4 118 q8 -4 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/>';
+  }
+  function hibiscus() {
+    var s = '<path class="a" opacity=".55" d="M18 108 C30 80 50 74 60 70 C46 88 34 100 18 108Z M102 112 C92 86 74 78 62 74 C72 92 84 104 102 112Z"/><g transform="translate(60 60)">';
+    for (var i = 0; i < 5; i++) s += '<ellipse class="f" rx="15" ry="24" cy="-20" transform="rotate(' + (i * 72) + ')"/>';
+    return s + '<circle class="a" r="7"/><path class="ka" d="M0 0 L20 -24"/><circle class="a" cx="21" cy="-26" r="2.6"/><circle class="a" cx="25" cy="-21" r="2.2"/><circle class="a" cx="16" cy="-29" r="2.2"/></g>';
+  }
+  function dogwood() {
+    var s = '<path class="a" opacity=".5" d="M14 30 C30 22 46 30 52 44 C36 46 22 42 14 30Z M106 96 C92 104 76 98 68 84 C84 82 98 86 106 96Z"/><g transform="translate(60 62)">';
+    for (var i = 0; i < 4; i++) s += '<path class="f" transform="rotate(' + (i * 90 + 45) + ')" d="M0 -3 C-16 -9 -18 -36 -7 -42 L0 -37 L7 -42 C18 -36 16 -9 0 -3Z"/>';
+    s += '<circle class="a" r="7"/>';
+    for (var j = 0; j < 6; j++) { var q = xy(0, 0, 4, j * 60); s += '<circle class="b" cx="' + q[0] + '" cy="' + q[1] + '" r="1.2"/>'; }
+    return s + '</g>';
+  }
+  function orange() {
+    return '<path class="f" d="M78 34 C84 18 100 14 108 18 C104 30 92 38 78 34Z"/><path class="k" d="M74 38 C76 34 78 32 80 30"/>' +
+      '<circle class="a" cx="58" cy="70" r="36"/><circle class="b" cx="58" cy="70" r="31"/><circle class="a" opacity=".85" cx="58" cy="70" r="28"/>' +
+      '<path class="kb" style="stroke-width:3;stroke-linecap:butt" d="M30 70 H86 M58 42 V98 M38.2 50.2 L77.8 89.8 M77.8 50.2 L38.2 89.8"/><circle class="b" cx="58" cy="70" r="4"/>';
+  }
+  function balloon(tx, ty, sc) {
+    return '<g transform="translate(' + tx + ' ' + ty + ') scale(' + sc + ')"><path class="f" d="M0 -40 C22 -40 30 -22 26 -8 C22 4 10 14 6 20 L-6 20 C-10 14 -22 4 -26 -8 C-30 -22 -22 -40 0 -40Z"/>' +
+      '<path class="a" d="M0 -40 C9 -26 9 4 3 20 L-3 20 C-9 4 -9 -26 0 -40Z"/>' +
+      '<path class="k" style="stroke-width:1.2" d="M-5 20 L-4 26 M5 20 L4 26"/><rect class="f" x="-5" y="26" width="10" height="7"/></g>';
+  }
+
+  var places = [
+    { n: 'Alaska', bg: C.teal, fg: C.cream, ac: C.gold, svg:
+      '<path class="ka" d="M4 34 Q30 16 56 30 T116 24" opacity=".9"/><path class="ka" d="M4 46 Q34 30 60 42 T116 36" opacity=".55"/><path class="ka" d="M4 58 Q36 44 62 54 T116 48" opacity=".3"/>' +
+      '<circle class="f" cx="20" cy="14" r="1.5"/><circle class="f" cx="92" cy="10" r="1.5"/><circle class="f" cx="70" cy="16" r="1"/><circle class="f" cx="40" cy="8" r="1"/>' +
+      '<path class="f" d="M0 120 V98 L30 66 L44 80 L68 48 L98 88 L108 80 L120 92 V120Z"/><path class="a" d="M68 48 L58 61 L64 59 L68 65 L72 59 L78 62Z M30 66 L23 74 L28 73 L32 77 L36 72Z"/>' +
+      '<path class="b" d="M14 120 L22 100 L30 120Z M82 120 L90 102 L98 120Z M94 120 L100 106 L106 120Z"/>' },
+    { n: 'California', bg: C.gold, fg: C.forest, ac: C.cream, svg:
+      '<circle class="a" cx="52" cy="74" r="32"/><rect class="b" x="14" y="78" width="80" height="3"/><rect class="b" x="14" y="86" width="80" height="4"/><rect class="b" x="14" y="95" width="80" height="5"/>' +
+      '<rect class="f" x="0" y="102" width="120" height="18"/><path class="ka" style="stroke-width:1.5" d="M10 110 h20 M44 114 h26 M84 109 h22"/>' +
+      '<path class="k" style="stroke-width:4.5" d="M88 104 Q82 70 80 38"/>' +
+      '<path class="f" d="M80 38 Q62 24 42 36 Q62 32 80 40Z M80 38 Q96 22 114 32 Q96 30 80 40Z M80 38 Q72 18 58 12 Q74 22 79 38Z M80 38 Q90 16 102 12 Q90 24 81 38Z M80 38 Q98 40 106 56 Q94 44 80 40Z M80 38 Q62 44 56 60 Q66 46 80 40Z"/>' },
+    { n: 'Canada', bg: C.forest, fg: C.gold, ac: C.cream, svg:
+      '<path class="f" d="M60 12 L67 30 L75 26 L72 50 L86 36 L90 44 L102 40 L96 58 L104 62 L82 78 L85 86 L63 82 L62 106 L58 106 L57 82 L35 86 L38 78 L16 62 L24 58 L18 40 L30 44 L34 36 L48 50 L45 26 L53 30Z"/>' +
+      '<path class="kb" d="M60 22 V100 M60 60 L84 46 M60 60 L36 46 M60 74 L80 70 M60 74 L40 70"/>' },
+    { n: 'Connecticut', bg: C.sage, fg: C.cream, ac: C.forest, svg:
+      '<circle class="f" cx="96" cy="24" r="9" opacity=".7"/><path class="k" style="stroke-width:2" d="M60 22 V88"/>' +
+      '<path class="f" d="M63 26 L63 84 L96 84Z"/><path class="a" d="M57 34 L57 84 L30 84Z"/><path class="a" d="M60 18 L70 22 L60 25Z"/>' +
+      '<path class="f" d="M26 88 H94 L84 99 H36Z"/><path class="ka" d="M4 106 q10 -5 20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/><path class="k" opacity=".6" d="M14 116 q10 -5 20 0 t20 0 t20 0 t20 0"/>' },
+    { n: 'Florida', bg: C.cream, fg: C.moss, ac: C.gold, svg: orange() },
+    { n: 'France', bg: C.forest, fg: C.gold, ac: C.cream, svg:
+      '<circle class="a" cx="22" cy="20" r="1.4"/><circle class="a" cx="98" cy="28" r="1.4"/><circle class="a" cx="88" cy="12" r="1"/><circle class="a" cx="30" cy="40" r="1"/>' +
+      '<path class="f" d="M59 8 H61 L63 40 L68 62 L82 104 H72 Q60 84 48 104 H38 L52 62 L57 40Z"/><rect class="f" x="49" y="38" width="22" height="4"/><rect class="f" x="44" y="62" width="32" height="5"/>' +
+      '<path class="kb" d="M57.5 44 L64 60 M62.5 44 L56 60 M54 70 L74 100 M66 70 L46 100"/><path class="ka" d="M14 106 H106" style="stroke-width:1.5"/>' },
+    { n: 'Hawaii', bg: C.moss, fg: C.cream, ac: C.gold, svg: hibiscus() },
+    { n: 'Mexico', bg: C.cream, fg: C.forest, ac: C.gold, svg: picado() },
+    { n: 'Michigan', bg: C.teal, fg: C.cream, ac: C.gold, svg:
+      '<path class="a" opacity=".3" d="M60 41 L2 26 V56Z M60 41 L118 26 V56Z"/>' +
+      '<path class="f" d="M52 100 L56 46 H64 L68 100Z"/><path class="a" d="M54.9 60 H65.1 L65.7 68 H54.3Z M53.4 80 H66.6 L67.2 88 H52.8Z"/>' +
+      '<rect class="a" x="54" y="35" width="12" height="11"/><path class="kb" d="M58 35 V46 M62 35 V46"/><path class="f" d="M51 36 L60 25 L69 36Z"/><rect class="f" x="52" y="45" width="16" height="3"/>' +
+      '<path class="f" d="M38 108 Q44 96 60 98 Q76 96 84 108Z"/><path class="ka" d="M4 108 q8 -4 16 0 t16 0 M84 108 q8 -4 16 0 t16 0"/><path class="k" opacity=".5" d="M10 116 q10 -4 20 0 t20 0 t20 0 t20 0 t20 0"/>' },
+    { n: 'New Jersey', bg: C.pale, fg: C.forest, ac: C.moss, svg: wheel() },
+    { n: 'New Mexico', bg: C.forest, fg: C.gold, ac: C.cream, svg:
+      balloon(62, 50, 1) + balloon(24, 86, .42) + balloon(98, 80, .34) +
+      '<path class="f" opacity=".5" d="M0 120 V108 H18 L24 102 H52 L58 108 H120 V120Z"/>' },
+    { n: 'Spain', bg: C.moss, fg: C.gold, ac: C.cream, svg: fan() },
+    { n: 'Switzerland', bg: C.cream, fg: C.forest, ac: C.gold, svg:
+      '<rect class="a" x="10" y="12" width="20" height="20"/><path class="b" d="M18 15 H22 V20 H27 V24 H22 V29 H18 V24 H13 V20 H18Z"/>' +
+      '<path class="f" d="M0 106 L30 82 L46 90 L66 22 L74 32 L82 56 L96 70 L120 84 V120 H0Z"/><path class="b" d="M66 22 L59 44 L65 40 L69 48 L73 40 L78 46 L74 32Z M30 82 L24 88 L30 86 L34 90 L38 86Z"/>' +
+      '<path class="a" d="M0 120 V112 Q30 104 60 110 T120 106 V120Z"/>' },
+    { n: 'Virginia', bg: C.sage, fg: C.cream, ac: C.gold, svg: dogwood() },
+    { n: 'Washington', bg: C.teal, fg: C.cream, ac: C.gold, svg:
+      '<path class="f" opacity=".85" d="M14 100 L56 58 L66 62 L78 48 L120 92 V100Z"/><path class="b" d="M78 48 L70 58 L75 57 L79 62 L83 57 L88 58Z"/>' +
+      '<path class="k" style="stroke-width:2" d="M34 18 V40 M30 112 L33 52 M38 112 L35 52 M30 112 L38 84 M38 112 L30 84"/><ellipse class="a" cx="34" cy="48" rx="15" ry="4.5"/><path class="a" d="M26 44 Q34 36 42 44Z"/>' +
+      '<path class="a" d="M86 112 L94 90 L102 112Z M98 112 L106 94 L114 112Z M74 112 L80 98 L86 112Z"/><rect class="f" x="0" y="112" width="120" height="8"/>' }
+  ];
+
+  var items = places.map(function (p) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'stamp-item';
+    b.setAttribute('aria-label', p.n + ' stamp');
+    b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<span class="stamp-full"><span class="stamp"><span class="stamp-art" style="--bg:' + p.bg + ';--fg:' + p.fg + ';--ac:' + p.ac + '">' +
+      '<span class="stamp-top"><span class="stamp-den">10<small>&cent;</small></span></span>' +
+      '<svg viewBox="0 0 120 120" aria-hidden="true">' + p.svg + '</svg>' +
+      '<span class="stamp-nm">' + p.n + '</span><span class="stamp-lv">Lungaversary</span></span></span></span>';
+    pile.appendChild(b);
+    return b;
+  });
+  document.getElementById('pile-foot').hidden = false;
+
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var seed = 19, zTop = 100, lifted = null, spots = [];
+  function place(b, idx, up) {
+    var s = spots[idx];
+    b.style.transform = up ? 'translate(' + s.x + 'px,' + (s.y - 8) + 'px) rotate(0deg) scale(1.18)' : 'translate(' + s.x + 'px,' + s.y + 'px) rotate(' + s.rot + 'deg)';
+  }
+  function scatter() {
+    var rand = rng(seed), W = pile.clientWidth || 340;
+    var sw = Math.min(150, Math.round(W * 0.38)), sh = Math.round(sw * 264 / 216), gap = Math.round(sh * 0.5);
+    var order = items.map(function (_, i) { return i; });
+    for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)), t = order[i]; order[i] = order[j]; order[j] = t; }
+    var depth = items.map(function () { return rand(); });
+    items.forEach(function (b, idx) {
+      var cell = order[idx], col = cell % 3, row = Math.floor(cell / 3);
+      var x = col * (W - sw) / 2 + (rand() - 0.5) * 26;
+      var y = row * gap + (col === 1 ? gap * 0.45 : 0) + (rand() - 0.5) * 16;
+      x = Math.max(-4, Math.min(W - sw + 4, x));
+      spots[idx] = { x: r(x), y: r(y + 10), rot: r((rand() - 0.5) * 26) };
+      b.style.width = sw + 'px'; b.style.height = sh + 'px';
+      b.style.setProperty('--s', (sw / 216).toFixed(4));
+      b.style.zIndex = String(Math.round(depth[idx] * 60));
+      b.classList.remove('lifted'); b.setAttribute('aria-pressed', 'false');
+      place(b, idx, false);
+    });
+    lifted = null;
+    pile.style.height = Math.round(4 * gap + gap * 0.45 + sh + 30) + 'px';
+  }
+  items.forEach(function (b, idx) {
+    b.addEventListener('click', function () {
+      if (lifted !== null && lifted !== idx) { items[lifted].classList.remove('lifted'); items[lifted].setAttribute('aria-pressed', 'false'); place(items[lifted], lifted, false); }
+      if (lifted === idx) { b.classList.remove('lifted'); b.setAttribute('aria-pressed', 'false'); place(b, idx, false); lifted = null; return; }
+      b.style.zIndex = String(++zTop); b.classList.add('lifted'); b.setAttribute('aria-pressed', 'true'); place(b, idx, true); lifted = idx;
+    });
+  });
+  document.getElementById('shuffle').addEventListener('click', function () { seed = Math.floor(Math.random() * 1e9); scatter(); });
+  var lastW = pile.clientWidth;
+  window.addEventListener('resize', function () { if (pile.clientWidth !== lastW) { lastW = pile.clientWidth; scatter(); } });
+  scatter();
+})();
+
+// Face-down arches: turn over on tap, and only then show the caption
+(function () {
+  document.querySelectorAll('.flip').forEach(function (b) {
+    var fig = b.closest('figure'), cap = fig.querySelector('figcaption'), alt = b.querySelector('.back img').alt;
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.setAttribute('aria-label', on ? alt + '. Tap to turn it back over.' : 'A face-down photo. Tap to turn it over.');
+      fig.classList.toggle('on', on);
+      cap.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
   });
 })();
 </script>
