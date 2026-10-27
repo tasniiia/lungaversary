@@ -151,10 +151,10 @@ section[id]{scroll-margin-top:68px}
 .stats > div + div{border-left:1px solid var(--rule)}
 .stats b{display:block;font-weight:400;font-size:26px;color:var(--heading)}
 .stats span{display:block;font-size:11px;line-height:1.4;color:var(--sub)}
-.surgeon{margin:28px 0 0;display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:16px;align-items:end}
-.surgeon img{width:132px;height:176px;object-fit:cover}
-.surgeon figcaption{font-size:14px;line-height:1.6}
-.surgeon .eyebrow{display:block;margin-bottom:4px}
+.surgeon{margin:28px 0 0;display:grid;grid-template-columns:minmax(0,48%) minmax(0,1fr);column-gap:18px;align-items:end}
+.surgeon img{width:100%;aspect-ratio:6/7;height:auto;object-fit:cover;object-position:center 30%}
+.surgeon figcaption{font-size:15px;line-height:1.6}
+.surgeon .eyebrow{display:block;margin-bottom:6px}
 
 .after{padding-top:0;padding-bottom:48px;display:flex;flex-direction:column;gap:12px}
 .places{margin-top:48px;padding:26px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);text-align:center}
@@ -329,7 +329,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <h2 id="story-title">Her story</h2>
 
       <div class="chapter">
-        <div class="eyebrow">2012 · The beginning</div>
+        <div class="eyebrow">2012 · The diagnosis</div>
         <h3>Short of breath</h3>
         <p>In 2012, my mom went in for a routine doctor’s appointment. Her doctor noticed that just walking across the room made her oxygen levels drop far lower than they ever should have.</p>
         <p>Months of tests and biopsies followed, and with them three diagnoses: Sjögren’s syndrome, pulmonary hypertension and pulmonary fibrosis. Medication could ease her symptoms, but only new lungs could change the ending.</p>
@@ -337,7 +337,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       </div>
 
       <div class="chapter">
-        <div class="eyebrow">2013 – 2016 · The long road</div>
+        <div class="eyebrow">2013 – 2016 · The wait</div>
         <h3>Waiting to be let in</h3>
         <p>Year by year, her condition worsened. Oregon had no lung transplant program, so she went through months of testing to join the list at the University of Washington. But my dad’s work kept him moving from state to state, and with that much uncertainty, we couldn’t plan for a transplant at UW. She stepped off the list.</p>
         <p>A year later, sicker than before, she went back. This time UW turned her away, saying she was too high-risk. Her pulmonology team refused to accept that and pointed her to UCLA, where her condition put her straight at the top of the list.</p>
@@ -345,8 +345,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       </div>
 
       <div class="chapter">
-        <div class="eyebrow">December 2016 · 4:00 a.m.</div>
-        <h3>The call</h3>
+        <div class="eyebrow">2016 · The call</div>
+        <h3>The moment we’d been waiting for</h3>
         <p>About a month later, the phone rang at four in the morning. Our bags were already packed. My mom flew to Los Angeles by air ambulance, I caught the first flight out, and my dad drove down from Sacramento, where he was working, to meet us there.</p>
         <figure class="bleed">
           <img src="images/life-flight-640.webp" srcset="images/life-flight-640.webp 640w, images/life-flight-1200.webp 960w" sizes="(min-width:560px) 512px, 100vw" alt="A Cal-Ore Life Flight air ambulance on the tarmac, its pilot walking beside it" style="height:260px" loading="lazy" decoding="async">
@@ -365,7 +365,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       </div>
 
       <div class="chapter">
-        <div class="eyebrow">UCLA · Overnight</div>
+        <div class="eyebrow">2016 · The surgery</div>
         <h3>The longest night</h3>
         <p>The surgery ran through the night, and none of us slept. Our phones never stopped buzzing with calls and texts from everyone who loves her, sending strength, prayers and positivity, asking for updates and offering whatever help they could.</p>
         <p>We had no idea whether she would make it out. <em>Spoiler: she did.</em></p>
@@ -381,7 +381,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       </div>
 
       <div class="chapter" style="margin-top:44px">
-        <div class="eyebrow">Winter 2016 – Spring 2017</div>
+        <div class="eyebrow">2016 – 2017 · The recovery</div>
         <h3>Learning to breathe again</h3>
         <p>After three weeks in the ICU, she moved into Tiverton House, UCLA’s hotel for patients and their families. We were supposed to stay three months. She recovered so well that we went home after two.</p>
         <p>We were never alone. My mom’s three siblings, two of my cousins, my dad’s brother and other relatives came to see her, and so did a few of my dad’s closest friends. My Nanu, my mom’s mom, even stayed with us for about a month to help with her recovery.</p>
@@ -395,7 +395,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
           <figure class="print tilt-r2 drop"><img src="images/tiverton-640.webp" alt="Sheuli and her husband in front of the UCLA Tiverton House sign" style="height:120px" loading="lazy" decoding="async"><figcaption class="cap">home for two months</figcaption></figure>
         </div>
         <figure class="surgeon">
-          <img src="images/dr-hunter-640.webp" alt="Sheuli with her surgeon, Dr. Curtis Hunter, in his office" loading="lazy" decoding="async">
+          <img src="images/dr-hunter-feature.webp" alt="Sheuli standing with her surgeon, Dr. Curtis Hunter, his arm around her shoulders, in his office at UCLA" loading="lazy" decoding="async">
           <figcaption><span class="eyebrow">Her surgeon</span><em>With Dr. Curtis Hunter,</em> her lead surgeon at UCLA, who replaced both of her lungs and saved her life.</figcaption>
         </figure>
       </div>
@@ -403,7 +403,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
   </section>
 
   <section class="after wrap" aria-label="After the transplant">
-    <div class="eyebrow">2017 – 2026 · After</div>
+    <div class="eyebrow">2017 – 2026 · The years since</div>
     <h3>Getting her life back</h3>
     <p>As she got stronger, my mom and I explored Los Angeles together, wandering markets and landmarks and Ubering anywhere we could, from the Griffith Observatory to the Dolby Theatre to Chinatown and everywhere in between. She had been handed a second chance, and she wasn’t going to waste a minute of it.</p>
     <figure class="bleed" style="margin-top:8px">
