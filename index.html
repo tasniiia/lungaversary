@@ -81,9 +81,10 @@ section[id]{scroll-margin-top:68px}
 .hero-ten{position:absolute;right:-44px;bottom:-92px;font-style:italic;font-size:340px;line-height:1;letter-spacing:-.04em;color:#24432F;pointer-events:none;user-select:none}
 @media (min-width:620px){.hero-ten{right:calc(50% - 360px)}}
 .hero .wrap{position:relative}
-.mode-toggle{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:2;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--forest-line);border-radius:999px;background:transparent;color:var(--on-dark);font-family:var(--serif);font-size:13px;font-style:italic;cursor:pointer}
+.mode-toggle{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));z-index:2;display:grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid var(--forest-line);border-radius:50%;background:transparent;color:var(--on-dark);cursor:pointer}
+.mode-toggle::after{content:"";position:absolute;inset:-6px}
 .mode-toggle:hover{border-color:var(--gold-light);color:var(--linen)}
-.mode-toggle svg{width:16px;height:16px}
+.mode-toggle svg{width:15px;height:15px}
 .hero h1{margin-top:22px;font-size:76px;line-height:1;letter-spacing:-.01em}
 .hero-line{margin-top:22px;max-width:270px;font-style:italic;font-size:19px;line-height:1.5;color:var(--on-dark)}
 .hero-line span{color:var(--gold-light)}
@@ -236,7 +237,7 @@ section[id]{scroll-margin-top:68px}
 @media (min-width:520px){.arch img{height:340px}}
 .arches figcaption{margin-top:12px}
 .arches .t{display:block;font-style:italic;font-size:clamp(14px,4vw,18px);line-height:1.3;white-space:nowrap}
-.arches .s{display:block;margin-top:4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-pale)}
+.arches .s{display:block;margin-top:4px;font-size:clamp(9.5px,2.8vw,11.5px);white-space:nowrap;color:var(--gold-pale)}
 
 /* Evening */
 .evening{background:var(--forest);color:var(--linen);padding:48px 0 52px}
@@ -319,7 +320,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 </nav>
 
 <header class="hero" id="top">
-  <button type="button" class="mode-toggle" id="mode-toggle" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><span>Evening mode</span></button>
+  <button type="button" class="mode-toggle" id="mode-toggle" aria-pressed="false" aria-label="Switch to evening mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
   <div class="hero-ten" aria-hidden="true">10</div>
   <div class="wrap">
     <div class="eyebrow">Celebrating</div>
@@ -353,7 +354,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div class="eyebrow">2012 · The diagnosis</div>
         <h3>Short of breath</h3>
         <p>In 2012, my mom went in for a routine doctor’s appointment. Her doctor noticed that just walking across the room made her oxygen levels drop far lower than they ever should have.</p>
-        <p>Months of tests and biopsies followed, and with them three diagnoses: Sjögren’s syndrome, pulmonary hypertension and pulmonary fibrosis. Medication could ease her symptoms, but only new lungs could change the ending.</p>
+        <p>Months of tests and biopsies followed, and with them three diagnoses. Sjögren’s syndrome, an autoimmune disease, had turned her immune system against her own body. Pulmonary fibrosis was slowly scarring her lungs, and pulmonary hypertension was forcing her heart to work harder to pump blood through them. Her lungs simply couldn’t get enough oxygen into her body anymore. Medication could ease her symptoms, but only new lungs could change the ending.</p>
         <p>Along the way, she found her people. She joined a number of support groups for others facing the same diagnosis and met many incredible human beings, a few of whom are here tonight.</p>
       </div>
 
@@ -401,7 +402,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <p style="margin-top:14px">The team at UCLA is incredible. They had her up and walking within a day.</p>
         <figure class="print tilt-l center" style="width:230px;margin-top:14px">
           <img src="images/first-walk-640.webp" alt="Sheuli walking with a walker in the ICU, a nurse steadying her oxygen and IV pole" style="height:290px" loading="lazy" decoding="async">
-          <figcaption class="cap">her first walk</figcaption>
+          <figcaption class="cap">her first walk post-transplant</figcaption>
         </figure>
       </div>
 
@@ -498,11 +499,11 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       <div class="arches">
         <figure>
           <div class="arch"><img src="images/graduation-640.webp" alt="Sheuli and her husband looking at their daughter’s Oregon State University diploma" loading="lazy" decoding="async"></div>
-          <figcaption><span class="t">My college graduation</span><span class="s">Oregon State</span></figcaption>
+          <figcaption><span class="t">My college graduation</span><span class="s">Oregon State University, 2019</span></figcaption>
         </figure>
         <figure>
           <div class="arch"><img src="images/wedding-family-640.webp" alt="Sheuli and her husband with their daughter and son-in-law on the wedding day" style="object-position:center 30%" loading="lazy" decoding="async"></div>
-          <figcaption><span class="t">My wedding</span><span class="s">Planned together</span></figcaption>
+          <figcaption><span class="t">My wedding</span><span class="s">The Oregon Golf Club, 2023</span></figcaption>
         </figure>
       </div>
     </div>
@@ -764,7 +765,8 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     var ev = document.documentElement.getAttribute('data-mode') === 'evening';
     modeBtn.setAttribute('aria-pressed', ev ? 'true' : 'false');
     modeBtn.querySelector('svg').innerHTML = ev ? sun : moon;
-    modeBtn.querySelector('span').textContent = ev ? 'Day mode' : 'Evening mode';
+    modeBtn.setAttribute('aria-label', ev ? 'Switch to day mode' : 'Switch to evening mode');
+    modeBtn.title = ev ? 'Day mode' : 'Evening mode';
     themeMeta.setAttribute('content', ev ? '#0F1D15' : '#1E3A2A');
   }
   modeBtn.addEventListener('click', function () {
