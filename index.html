@@ -144,6 +144,14 @@ section[id]{scroll-margin-top:68px}
 .tilt-l{transform:rotate(-2deg)} .tilt-r{transform:rotate(2deg)}
 .tilt-l2{transform:rotate(-1.5deg)} .tilt-r2{transform:rotate(1.5deg)}
 .center{align-self:center}
+.air-wide{margin-top:14px}
+.air-wide img{height:230px;object-position:center 45%}
+.air-window{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 170px;column-gap:16px;align-items:end;margin-top:-64px}
+.window{width:170px;height:220px;border-radius:85px;padding:9px;background:#E9E4D8;box-shadow:inset 0 0 0 1px #CFC6B2,0 6px 18px rgba(27,38,30,.22)}
+.window img{width:100%;height:100%;object-fit:cover;object-position:34% 62%;border-radius:76px}
+.air-cap{margin:0 0 6px;font-style:italic;font-size:15px;line-height:1.4;color:var(--heading)}
+.air-cap span{display:block;margin-top:4px;font-size:12px;color:var(--sub)}
+:root[data-mode="evening"] .window{background:#D9D2C2}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 .pair .print{padding:7px 7px 0}
 .pair .print .cap{font-size:13px}
@@ -339,7 +347,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
 
       <div class="chapter">
         <div class="eyebrow">2013 – 2016 · The wait</div>
-        <h3>Waiting to be let in</h3>
+        <h3>The long road to UCLA</h3>
         <p>Year by year, her condition worsened. Oregon had no lung transplant program, so she went through months of testing to join the list at the University of Washington. But my dad’s work kept him moving from state to state, and with that much uncertainty, we couldn’t plan for a transplant at UW. She stepped off the list.</p>
         <p>A year later, sicker than before, she went back. This time UW turned her away, saying she was too high-risk. Her pulmonology team refused to accept that and pointed her to UCLA, where her condition put her straight at the top of the list.</p>
         <p class="pull"><span class="nw">They told her no one would take her.</span><br><span class="big">UCLA did.</span></p>
@@ -349,14 +357,11 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
         <div class="eyebrow">2016 · The call</div>
         <h3 class="nowrap">The moment we’d been waiting for</h3>
         <p>About a month later, the phone rang at four in the morning. Our bags were already packed. My mom flew to Los Angeles by air ambulance, I caught the first flight out, and my dad drove down from Sacramento, where he was working, to meet us there.</p>
-        <figure class="bleed">
-          <img src="images/life-flight-640.webp" srcset="images/life-flight-640.webp 640w, images/life-flight-1200.webp 960w" sizes="(min-width:560px) 512px, 100vw" alt="A Cal-Ore Life Flight air ambulance on the tarmac, its pilot walking beside it" style="height:260px" loading="lazy" decoding="async">
-          <figcaption>The air ambulance that carried her south.</figcaption>
-        </figure>
-        <figure class="print tilt-r center" style="width:230px;margin-top:22px">
-          <img src="images/tarmac-640.webp" alt="Family waving goodbye on the tarmac, seen from inside the air ambulance doorway" style="height:160px" loading="lazy" decoding="async">
-          <figcaption><div class="cap">sending her off</div><div class="sub">Our goodbye, from her seat on the plane</div></figcaption>
-        </figure>
+        <figure class="bleed air-wide"><img src="images/life-flight-640.webp" alt="The Cal-Ore Life Flight air ambulance on the tarmac, its pilot walking beside it" loading="lazy" decoding="async"></figure>
+        <div class="air-window">
+          <p class="air-cap">The air ambulance that flew her to LA<span>our goodbye on the tarmac</span></p>
+          <div class="window"><img src="images/tarmac-640.webp" alt="Family waving goodbye on the tarmac, seen from inside the air ambulance doorway" loading="lazy" decoding="async"></div>
+        </div>
       </div>
 
       <div class="stats">
