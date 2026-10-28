@@ -37,7 +37,7 @@ Each phone can add a note every 20 seconds, up to 10 notes, which stops accident
 
 When guests tap **I just registered** in the Pass it on section, the count goes up for everyone. Each phone counts once, checked on the server. It uses the same Blob store as the notes, so there's nothing extra to set up.
 
-To show it on a TV or projector during the toasts, open `https://YOUR-SITE.vercel.app/count` in a browser and make it full screen. It refreshes on its own every few seconds.
+To show it on a TV or projector during the toasts, open `https://YOUR-SITE.vercel.app/count` in a browser and make it full screen. It refreshes on its own every 15 seconds.
 
 ## Privacy, speed and analytics
 
@@ -51,9 +51,14 @@ To show it on a TV or projector during the toasts, open `https://YOUR-SITE.verce
 Search `index.html` for `[` to find them:
 
 - `[performer]` — the live music
+- `[Third mocktail]` and `[Ingredients]` — the Drinks tab
 - The **Sweets** tab — once the Luxe Sucre menu is set, replace “Final selections coming soon” with the desserts
+
+## Keep test traffic light
+
+On the free Hobby plan, Vercel Blob includes 2,000 "advanced operations" a month, and if that runs out, notes and the donor count stop working for 30 days. Saving a note costs 2, registering costs 2, and the donor count is cached so the whole room shares a few lookups a minute. A normal evening uses a few hundred. Before the party, test with a handful of notes and taps, avoid leaving `/count` open for days, and browse the store in the Vercel dashboard sparingly (dashboard views count too). Hide test notes on the review page afterwards.
 
 
 ## Editing later
 
-Everything is plain HTML in `index.html`. To swap a photo, add a WebP (about 640 px wide) to `images/` and change the `src`. Commit to GitHub and Vercel redeploys automatically.
+Everything is plain HTML in `index.html`. To swap a photo, add a WebP (about 640 px wide) to `images/` under a **new file name** and change the `src` (phones keep photos cached for a day, so reusing a name can show the old one). Commit to GitHub and Vercel redeploys automatically.

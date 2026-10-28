@@ -5,12 +5,17 @@
 //
 // Each phone gets one file, donors/<phone>.json. A second tap from the same phone
 // finds the file already there and is not counted again.
+//
+// Counting means listing the store, which Vercel bills as an "advanced operation"
+// (the free Hobby plan includes 2,000 a month). GET responses are cached at the edge
+// for 20 seconds, so the count costs at most a few lookups a minute however many
+// phones and screens are watching it.
 
 import { put, list } from '@vercel/blob';
-import { deviceKey, json, readBody } from './_shared.js';
+import { deviceKey, json, readBody, SHARED_SHORT_CACHE } from './_shared.js';
 
 export default async function handler(request) {
-  if (request.method === 'GET') return json({ count: await countDonors() });
+  if (request.method === 'GET') return json({ count: await countDonors() }, 200, SHARED_SHORT_CACHE);
   if (request.method !== 'POST') {
     return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, POST' } });
   }

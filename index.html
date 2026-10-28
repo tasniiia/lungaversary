@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lungaversary.vercel.app/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231E3A2A'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='34' fill='%23D4B46A'%3E10%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/lb-italic.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/lb-regular.woff" as="font" type="font/woff" crossorigin>
 <script>
@@ -131,7 +132,7 @@ section[id]{scroll-margin-top:68px}
 .chapter{margin-top:40px;display:flex;flex-direction:column;gap:12px}
 .chapter:first-of-type{margin-top:28px}
 .pull{margin:22px 0 6px;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);text-align:center;font-style:italic;font-size:18px;line-height:1.5;color:var(--heading)}
-.pull .nw{white-space:nowrap}
+.pull .nw{white-space:nowrap;font-size:clamp(15px,calc((100vw - 48px) / 15.6),18px)}
 .pull .big{font-size:26px}
 .bleed{margin:14px calc(var(--gutter) * -1) 0}
 @media (min-width:560px){.bleed{margin-left:0;margin-right:0}}
@@ -689,13 +690,19 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
       if (past) jump.removeAttribute('inert'); else jump.setAttribute('inert', '');
     }).observe(program);
 
-    var current = null;
+    var current = null, bar = jump.querySelector('.jump-inner');
+    // Keep the active link visible by scrolling the bar sideways only (never the page)
+    function revealLink(a) {
+      var l = a.offsetLeft, r = l + a.offsetWidth;
+      if (l < bar.scrollLeft + 12) bar.scrollTo({ left: Math.max(0, l - 12), behavior: 'smooth' });
+      else if (r > bar.scrollLeft + bar.clientWidth - 12) bar.scrollTo({ left: r - bar.clientWidth + 12, behavior: 'smooth' });
+    }
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) current = e.target.id; });
       links.forEach(function (a) {
         var on = a.getAttribute('href') === '#' + current;
         a.classList.toggle('active', on);
-        if (on) { a.setAttribute('aria-current', 'location'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+        if (on) { a.setAttribute('aria-current', 'location'); revealLink(a); }
         else a.removeAttribute('aria-current');
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
@@ -914,14 +921,10 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     };
   })();
 
-  // Gold flecks, then open Donate Life
+  // Gold flecks as Donate Life opens in a new tab. The link opens straight away:
+  // delaying it would trip phone pop-up blockers and could pull guests off this page.
   var donate = document.getElementById('donate-link');
-  donate.addEventListener('click', function (e) {
-    if (fx.still || e.metaKey || e.ctrlKey || e.shiftKey) return;
-    e.preventDefault(); fx.flecks(donate);
-    var url = donate.href;
-    setTimeout(function () { var w = window.open(url, '_blank', 'noopener'); if (!w) location.href = url; }, 550);
-  });
+  donate.addEventListener('click', function () { fx.flecks(donate); });
 
   // Numbers count up the first time they come into view
   var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
@@ -967,7 +970,7 @@ footer .totop{display:inline-flex;align-items:center;min-height:44px;margin-top:
     fetch('/api/donors', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) { if (d) paint(d.count); }).catch(function () {});
   }
   loadCount();
-  setInterval(function () { if (!document.hidden) loadCount(); }, 20000);
+  setInterval(function () { if (!document.hidden) loadCount(); }, 30000);
   regBtn.addEventListener('click', function () {
     if (mine) return;
     regBtn.disabled = true;
